@@ -2,7 +2,7 @@
   <div>
     <h1>Run Index</h1>
     <!-- <p>{{ runs }}</p> -->
-    <div v-for="run in runs" v-bind:key="run.id">
+    <div v-for="(run, index) in runs" v-bind:key="run.id">
       <p>
         <b>{{ run.title }}</b>
       </p>
@@ -14,6 +14,11 @@
       <p v-for="comment in run.comments" v-bind:key="comment.id">
         {{ comment.user_name }}: {{ comment.text }}
       </p>
+      <input type="text" v-model="newComment" /><button
+        v-on:click="addComment(run, index)"
+      >
+        Add Comment
+      </button>
       <hr />
     </div>
   </div>
@@ -25,6 +30,7 @@ export default {
   data: function () {
     return {
       runs: {},
+      newComment: "",
     };
   },
   created: function () {
@@ -35,6 +41,17 @@ export default {
       axios.get("/runs").then((response) => {
         this.runs = response.data;
       });
+    },
+    addComment: function (run, index) {
+      axios
+        .post("/comments", { run_id: run.id, text: this.newComment })
+        .then((response) => {
+          console.log(response.data);
+          this.runs[index].comments.push(response.data);
+        })
+        .catch((errors) => {
+          console.log(errors.resposne.data.errors);
+        });
     },
   },
 };
