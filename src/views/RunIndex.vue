@@ -14,7 +14,7 @@
       <p v-for="comment in run.comments" v-bind:key="comment.id">
         {{ comment.user_name }}: {{ comment.text }}
       </p>
-      <input type="text" v-model="newComment" /><button
+      <input type="text" v-model="run.newComment" /><button
         v-on:click="addComment(run, index)"
       >
         Add Comment
@@ -30,7 +30,6 @@ export default {
   data: function () {
     return {
       runs: {},
-      newComment: "",
     };
   },
   created: function () {
@@ -44,10 +43,10 @@ export default {
     },
     addComment: function (run, index) {
       axios
-        .post("/comments", { run_id: run.id, text: this.newComment })
+        .post("/comments", { run_id: run.id, text: run.newComment })
         .then((response) => {
-          console.log(response.data);
           this.runs[index].comments.push(response.data);
+          this.runs[index].newComment = "";
         })
         .catch((errors) => {
           console.log(errors.resposne.data.errors);
