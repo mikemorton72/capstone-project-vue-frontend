@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Run Index</h1>
-    <!-- <p>{{ runs }}</p> -->
+    <div v-if="!loggedIn">Please log in to view posts</div>
     <div v-for="(run, index) in runs" v-bind:key="run.id">
       <p>
         <b>{{ run.title }}</b>
@@ -27,13 +27,22 @@
 <script>
 import axios from "axios";
 export default {
+  props: ["checkLoggedIn"],
   data: function () {
     return {
       runs: {},
+      loggedIn: false,
     };
   },
   created: function () {
-    this.runIndex();
+    this.checkLoggedIn()
+      .then(() => {
+        this.runIndex();
+        this.loggedIn = true;
+      })
+      .catch(() => {
+        this.loggedIn = false;
+      });
   },
   methods: {
     runIndex: function () {

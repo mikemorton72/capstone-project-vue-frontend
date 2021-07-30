@@ -7,7 +7,7 @@
       <router-link to="/login">Login</router-link> |
       <router-link to="/logout">Logout</router-link>
     </div>
-    <router-view />
+    <router-view v-bind:checkLoggedIn="checkLoggedIn" />
   </div>
 </template>
 
@@ -33,3 +33,19 @@
   color: #42b983;
 }
 </style>
+
+<script>
+export default {
+  methods: {
+    checkLoggedIn: function () {
+      return new Promise((resolve, reject) => {
+        if (localStorage.jwt) {
+          resolve();
+        } else {
+          reject();
+        }
+      });
+    },
+  },
+};
+</script>
