@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>User Index</h1>
+    <div v-if="!loggedIn">Please log in to view users</div>
     <hr />
     <div v-for="user in users" v-bind:key="user.id">
       <p>{{ user.id }}</p>
@@ -26,13 +27,22 @@
 <script>
 import axios from "axios";
 export default {
+  props: ["checkLoggedIn"],
   data: function () {
     return {
       users: {},
+      loggedIn: false,
     };
   },
   created: function () {
-    this.getUsers();
+    this.checkLoggedIn()
+      .then(() => {
+        this.getUsers();
+        this.loggedIn = true;
+      })
+      .catch(() => {
+        this.loggedIn = false;
+      });
   },
   methods: {
     getUsers: function () {

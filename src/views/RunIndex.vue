@@ -2,6 +2,7 @@
   <div>
     <h1>Run Index</h1>
     <div v-if="!loggedIn">Please log in to view posts</div>
+    <hr />
     <div v-for="(run, index) in runs" v-bind:key="run.id">
       <p>
         <b>{{ run.title }}</b>
