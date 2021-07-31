@@ -4,6 +4,7 @@ import Signup from "../views/Signup.vue";
 import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
 import RunIndex from "../views/RunIndex.vue";
+import UserIndex from "../views/UserIndex.vue";
 
 Vue.use(VueRouter);
 
@@ -32,6 +33,11 @@ const routes = [
     path: "/runs",
     name: "runs",
     component: RunIndex,
+  },
+  {
+    path: "/users",
+    name: "users",
+    component: UserIndex,
   },
 ];
 
