@@ -3,6 +3,7 @@
     <div id="nav">
       <!-- <router-link to="/">Home</router-link> | -->
       <router-link to="/">Feed</router-link> |
+      <router-link to="/runs/new">New Run</router-link> |
       <router-link to="/users">Users</router-link> |
       <router-link to="/signup">Signup</router-link> |
       <router-link to="/login">Login</router-link> |
