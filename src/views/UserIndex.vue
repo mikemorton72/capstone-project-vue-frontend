@@ -70,10 +70,11 @@ export default {
       axios
         .delete(`follows/${user.id}`)
         .then(() => {
-          user.follower_ids.splice(
-            user.follower_ids.indexOf({ id: parseInt(localStorage.user_id) }),
-            1
-          );
+          for (let i = 0; i < user.follower_ids.length; i++) {
+            if (user.follower_ids[i].id === parseInt(localStorage.user_id)) {
+              user.follower_ids.splice(i, 1);
+            }
+          }
         })
         .catch((errors) => {
           console.log(errors.response.data.errors);
