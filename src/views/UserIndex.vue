@@ -48,7 +48,11 @@ export default {
     getUsers: function () {
       axios.get("/users").then((response) => {
         let userIndex = response.data;
-        userIndex.splice(userIndex.indexOf(parseInt(localStorage.user_id)), 1); //removes currently logged in user from list
+        for (let i = 0; i < userIndex.length; i++) {
+          if (userIndex[i].id === parseInt(localStorage.user_id)) {
+            userIndex.splice(i, 1);
+          }
+        }
         this.users = userIndex;
       });
     },
