@@ -3,9 +3,10 @@ import VueRouter from "vue-router";
 import Signup from "../views/Signup.vue";
 import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
-import RunIndex from "../views/RunIndex.vue";
-import UserIndex from "../views/UserIndex.vue";
+import RunsIndex from "../views/RunsIndex.vue";
+import UsersIndex from "../views/UsersIndex.vue";
 import RunsNew from "../views/RunsNew.vue";
+import UsersShow from "../views/UsersShow.vue";
 
 Vue.use(VueRouter);
 
@@ -13,7 +14,7 @@ const routes = [
   {
     path: "/",
     name: "RunIndex",
-    component: RunIndex,
+    component: RunsIndex,
   },
   {
     path: "/signup",
@@ -31,11 +32,6 @@ const routes = [
     component: Logout,
   },
   {
-    path: "/runs",
-    name: "runs",
-    component: RunIndex,
-  },
-  {
     path: "/runs/new",
     name: "runsNew",
     component: RunsNew,
@@ -43,7 +39,12 @@ const routes = [
   {
     path: "/users",
     name: "users",
-    component: UserIndex,
+    component: UsersIndex,
+  },
+  {
+    path: "/users/:id",
+    name: "users show",
+    component: UsersShow,
   },
 ];
 
