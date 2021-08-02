@@ -3,7 +3,7 @@
     <h1>Run Index</h1>
     <div v-if="!loggedIn">Please log in to view posts</div>
     <hr />
-    <div v-for="(run, index) in runs" v-bind:key="run.id">
+    <div v-for="run in runs" v-bind:key="run.id">
       <p>
         <b>{{ run.title }}</b>
       </p>
@@ -16,7 +16,7 @@
         {{ comment.user_name }}: {{ comment.text }}
       </p>
       <input type="text" v-model="run.newComment" /><button
-        v-on:click="addComment(run, index)"
+        v-on:click="addComment(run)"
       >
         Add Comment
       </button>
@@ -28,7 +28,7 @@
 <script>
 import axios from "axios";
 export default {
-  props: ["checkLoggedIn"],
+  props: ["checkLoggedIn", "addComment"],
   data: function () {
     return {
       runs: {},
@@ -50,17 +50,6 @@ export default {
       axios.get("/runs").then((response) => {
         this.runs = response.data;
       });
-    },
-    addComment: function (run, index) {
-      axios
-        .post("/comments", { run_id: run.id, text: run.newComment })
-        .then((response) => {
-          this.runs[index].comments.push(response.data);
-          this.runs[index].newComment = "";
-        })
-        .catch((errors) => {
-          console.log(errors.resposne.data.errors);
-        });
     },
   },
 };
