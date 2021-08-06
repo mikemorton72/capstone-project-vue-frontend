@@ -82,7 +82,15 @@
   </div>
 </template>
 
-<style></style>
+<style>
+.card {
+  margin: 0 auto;
+  float: none;
+  margin-bottom: 10px;
+  align-content: "center";
+  width: 800px;
+}
+</style>
 
 <script>
 import axios from "axios";

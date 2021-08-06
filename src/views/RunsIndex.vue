@@ -2,32 +2,25 @@
   <div>
     <h1>Run Index</h1>
     <div v-if="!loggedIn">Please log in to view posts</div>
+    <RunCard
+      v-for="run in runs"
+      v-bind:key="run.id"
+      v-bind:run="run"
+      v-bind:distanceFormat="distanceFormat"
+      v-bind:timeFormat="timeFormat"
+      v-bind:addComment="addComment"
+    />
     <hr />
-    <div v-for="run in runs" v-bind:key="run.id">
-      <p>
-        <b>{{ run.title }}</b>
-      </p>
-      <p>Athlete: {{ run.user }}</p>
-      <p>Distance: {{ distanceFormat(run.distance) }} miles</p>
-      <p>Time: {{ timeFormat(run.elapsed_time) }}</p>
-      <br />
-      <p>Comments:</p>
-      <p v-for="comment in run.comments" v-bind:key="comment.id">
-        {{ comment.user_name }}: {{ comment.text }}
-      </p>
-      <input type="text" v-model="run.newComment" /><button
-        v-on:click="addComment(run)"
-      >
-        Add Comment
-      </button>
-      <hr />
-    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import RunCard from "./RunCard.vue";
 export default {
+  components: {
+    RunCard,
+  },
   props: ["checkLoggedIn", "addComment", "timeFormat", "distanceFormat"],
   data: function () {
     return {
