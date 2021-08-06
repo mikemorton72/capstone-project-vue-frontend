@@ -17,13 +17,28 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Feed</a>
+              <a
+                class="nav-link"
+                v-bind:class="{ active: isActive('/') }"
+                href="/"
+                >Feed</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/users">Users</a>
+              <a
+                class="nav-link"
+                v-bind:class="{ active: isActive('/users') }"
+                href="/users"
+                >Users</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/runs/new">Add Run</a>
+              <a
+                class="nav-link"
+                v-bind:class="{ active: isActive('/runs/new') }"
+                href="/runs/new"
+                >Add Run</a
+              >
             </li>
             <li class="nav-item dropdown">
               <a
@@ -33,6 +48,7 @@
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
+                v-bind:class="{ active: isActive(`/users/${userId()}`) }"
               >
                 My Account
               </a>
@@ -68,17 +84,19 @@
         </div>
       </div>
     </nav>
-    <router-view
-      v-bind:checkLoggedIn="checkLoggedIn"
-      v-bind:addComment="addComment"
-      v-bind:isCurrentUserFollowing="isCurrentUserFollowing"
-      v-bind:createFollow="createFollow"
-      v-bind:destroyFollow="destroyFollow"
-      v-bind:showUser="showUser"
-      v-bind:distanceFormat="distanceFormat"
-      v-bind:timeFormat="timeFormat"
-      v-bind:userId="userId"
-    />
+    <div class="container">
+      <router-view
+        v-bind:checkLoggedIn="checkLoggedIn"
+        v-bind:addComment="addComment"
+        v-bind:isCurrentUserFollowing="isCurrentUserFollowing"
+        v-bind:createFollow="createFollow"
+        v-bind:destroyFollow="destroyFollow"
+        v-bind:showUser="showUser"
+        v-bind:distanceFormat="distanceFormat"
+        v-bind:timeFormat="timeFormat"
+        v-bind:userId="userId"
+      />
+    </div>
   </div>
 </template>
 
@@ -97,6 +115,13 @@ import axios from "axios";
 import numeral from "numeral";
 export default {
   methods: {
+    isActive: function (route) {
+      if (this.$route.path == route) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     distanceFormat: function (number) {
       return numeral(number).format("0.00");
     },

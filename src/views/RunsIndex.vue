@@ -29,6 +29,7 @@ export default {
     };
   },
   created: function () {
+    console.log(this.$route);
     this.checkLoggedIn()
       .then(() => {
         this.runIndex();
