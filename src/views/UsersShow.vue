@@ -3,19 +3,22 @@
     <div v-if="!loggedIn">Please log in to view users</div>
     <div v-if="loggedIn">
       <h1>{{ user.name }}</h1>
-      <button
-        v-if="isCurrentUserFollowing(user)"
-        v-on:click="destroyFollow(user)"
-      >
-        Unfollow
-      </button>
-      <button
-        v-if="!isCurrentUserFollowing(user)"
-        v-on:click="createFollow(user)"
-      >
-        Follow
-      </button>
-      <p>Total miles: {{ user.total_miles }}</p>
+      <img v-bind:src="user.image" />
+      <div v-if="!isUsersPage()">
+        <button
+          v-if="isCurrentUserFollowing(user)"
+          v-on:click="destroyFollow(user)"
+        >
+          Unfollow
+        </button>
+        <button
+          v-if="!isCurrentUserFollowing(user)"
+          v-on:click="createFollow(user)"
+        >
+          Follow
+        </button>
+      </div>
+      <p>Total miles: {{ distanceFormat(user.total_miles) }}</p>
       <h3>Runs</h3>
       <div v-for="run in user.runs" v-bind:key="run.id">
         <p>{{ run.title }}</p>
@@ -47,6 +50,7 @@ export default {
     "destroyFollow",
     "distanceFormat",
     "timeFormat",
+    "user_id",
   ],
   data: function () {
     return {
@@ -68,8 +72,14 @@ export default {
     getUser: function () {
       axios.get(`/users/${this.$route.params.id}`).then((response) => {
         this.user = response.data;
-        console.log(response.data);
       });
+    },
+    isUsersPage: function () {
+      if (this.$route.params.id == localStorage.user_id) {
+        return true;
+      } else {
+        return false;
+      }
     },
   },
 };

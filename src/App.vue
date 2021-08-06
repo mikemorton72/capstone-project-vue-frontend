@@ -1,14 +1,73 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <!-- <router-link to="/">Home</router-link> | -->
-      <router-link to="/">Feed</router-link> |
-      <router-link to="/runs/new">New Run</router-link> |
-      <router-link to="/users">Users</router-link> |
-      <router-link to="/signup">Signup</router-link> |
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/logout">Logout</router-link>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">RunShare 🏃‍♂️</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Feed</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/users">Users</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/runs/new">Add Run</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                My Account
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li v-if="jwt()">
+                  <a class="dropdown-item" v-bind:href="`/users/${userId()}`"
+                    >My Page</a
+                  >
+                </li>
+                <li v-if="jwt()">
+                  <a class="dropdown-item" href="/logout">Logout</a>
+                </li>
+                <li v-if="!jwt()">
+                  <a class="dropdown-item" href="/login">Login</a>
+                </li>
+                <li v-if="!jwt()">
+                  <a class="dropdown-item" href="/signup">Sign Up</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Users Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
     <router-view
       v-bind:checkLoggedIn="checkLoggedIn"
       v-bind:addComment="addComment"
@@ -18,32 +77,12 @@
       v-bind:showUser="showUser"
       v-bind:distanceFormat="distanceFormat"
       v-bind:timeFormat="timeFormat"
+      v-bind:userId="userId"
     />
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+<style></style>
 
 <script>
 import axios from "axios";
@@ -64,6 +103,12 @@ export default {
           reject();
         }
       });
+    },
+    jwt: function () {
+      return localStorage.jwt;
+    },
+    userId: function () {
+      return localStorage.user_id;
     },
     addComment: function (run) {
       axios
