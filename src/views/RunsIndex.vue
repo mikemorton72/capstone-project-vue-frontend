@@ -8,8 +8,8 @@
         <b>{{ run.title }}</b>
       </p>
       <p>Athlete: {{ run.user }}</p>
-      <p>Distance: {{ run.distance }} miles</p>
-      <p>Time {{ run.elapsed_time }} minutes</p>
+      <p>Distance: {{ distanceFormat(run.distance) }} miles</p>
+      <p>Time: {{ timeFormat(run.elapsed_time) }}</p>
       <br />
       <p>Comments:</p>
       <p v-for="comment in run.comments" v-bind:key="comment.id">
@@ -28,7 +28,7 @@
 <script>
 import axios from "axios";
 export default {
-  props: ["checkLoggedIn", "addComment"],
+  props: ["checkLoggedIn", "addComment", "timeFormat", "distanceFormat"],
   data: function () {
     return {
       runs: {},

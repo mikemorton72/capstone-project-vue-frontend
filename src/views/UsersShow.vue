@@ -19,8 +19,8 @@
       <h3>Runs</h3>
       <div v-for="run in user.runs" v-bind:key="run.id">
         <p>{{ run.title }}</p>
-        <p>Distance: {{ run.distance }} miles</p>
-        <p>Time {{ run.elapsed_time }} minutes</p>
+        <p>Distance: {{ distanceFormat(run.distance) }} miles</p>
+        <p>Time: {{ timeFormat(run.elapsed_time) }}</p>
         <br />
         <p>Comments:</p>
         <p v-for="comment in run.comments" v-bind:key="comment.id">
@@ -45,6 +45,8 @@ export default {
     "addComment",
     "createFollow",
     "destroyFollow",
+    "distanceFormat",
+    "timeFormat",
   ],
   data: function () {
     return {

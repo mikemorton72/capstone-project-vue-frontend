@@ -16,6 +16,8 @@
       v-bind:createFollow="createFollow"
       v-bind:destroyFollow="destroyFollow"
       v-bind:showUser="showUser"
+      v-bind:distanceFormat="distanceFormat"
+      v-bind:timeFormat="timeFormat"
     />
   </div>
 </template>
@@ -45,8 +47,15 @@
 
 <script>
 import axios from "axios";
+import numeral from "numeral";
 export default {
   methods: {
+    distanceFormat: function (number) {
+      return numeral(number).format("0.00");
+    },
+    timeFormat: function (time_seconds) {
+      return numeral(time_seconds).format("00:00:00");
+    },
     checkLoggedIn: function () {
       return new Promise((resolve, reject) => {
         if (localStorage.jwt) {

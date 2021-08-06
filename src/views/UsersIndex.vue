@@ -6,7 +6,7 @@
     <div v-for="user in users" v-bind:key="user.id">
       <p>{{ user.id }}</p>
       <p v-on:click="showUser(user)" v-bind:key="user.id">{{ user.name }}</p>
-      <p>Total miles: {{ user.total_miles }}</p>
+      <p>Total miles: {{ distanceFormat(user.total_miles) }}</p>
       <button
         v-if="isCurrentUserFollowing(user)"
         v-on:click="destroyFollow(user)"
@@ -33,6 +33,7 @@ export default {
     "destroyFollow",
     "isCurrentUserFollowing",
     "showUser",
+    "distanceFormat",
   ],
   data: function () {
     return {
