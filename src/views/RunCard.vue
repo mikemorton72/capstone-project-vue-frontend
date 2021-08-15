@@ -1,5 +1,5 @@
 <template>
-  <div class="card mb-3" style="width: 75%">
+  <div class="card run-card mb-3">
     <div class="row g-0">
       <div class="col-md-4">
         <img
@@ -50,6 +50,15 @@
     </div>
   </div>
 </template>
+<style>
+.run-card {
+  margin: 0 auto;
+  float: none;
+  margin-bottom: 10px;
+  align-content: "center";
+  width: 80%;
+}
+</style>
 <script>
 export default {
   props: ["run", "distanceFormat", "timeFormat", "addComment"],
