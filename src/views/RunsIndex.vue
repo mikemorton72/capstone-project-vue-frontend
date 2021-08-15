@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Run Index</h1>
     <RunsNewModal v-bind:runs="runs" />
     <div v-if="!loggedIn">Please log in to view posts</div>
     <RunCard

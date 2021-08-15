@@ -25,6 +25,7 @@
             ></button>
           </div>
           <div class="modal-body">
+            <!-- <p><a v-bind:href="">Import from Strava</a></p> -->
             <ul v-for="error in errors" v-bind:key="error.id">
               <li>{{ error }}</li>
             </ul>
@@ -79,6 +80,9 @@ export default {
     };
   },
   methods: {
+    hasStrava: function () {
+      // if localStorage.
+    },
     showModal: function () {
       document.getElementById("backdrop").style.display = "block";
       document.getElementById("newRunModal").style.display = "block";

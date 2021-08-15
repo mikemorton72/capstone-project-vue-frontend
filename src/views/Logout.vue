@@ -11,6 +11,7 @@ export default {
     localStorage.removeItem("jwt");
     localStorage.removeItem("user_id");
     localStorage.removeItem("user_name");
+    localStorage.removeItem("has_strava");
     this.$router.push("/");
   },
 };

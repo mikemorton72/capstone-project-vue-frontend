@@ -19,7 +19,7 @@
             <li class="nav-item">
               <a
                 class="nav-link"
-                v-bind:class="{ active: isActive('/') }"
+                v-bind:class="{ active: isActiveNav('/') }"
                 href="/"
                 >Feed</a
               >
@@ -27,7 +27,7 @@
             <li class="nav-item">
               <a
                 class="nav-link"
-                v-bind:class="{ active: isActive('/users') }"
+                v-bind:class="{ active: isActiveNav('/users') }"
                 href="/users"
                 >Users</a
               >
@@ -40,14 +40,24 @@
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-                v-bind:class="{ active: isActive(`/users/${userId()}`) }"
+                v-bind:class="{ active: isActiveNav(`/users/${userId()}`) }"
               >
-                My Account
+                Account
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li v-if="jwt()">
                   <a class="dropdown-item" v-bind:href="`/users/${userId()}`"
                     >My Page</a
+                  >
+                </li>
+                <li v-if="hasStrava() && jwt()">
+                  <a class="dropdown-item" v-on:click="destroyStrava()"
+                    >Unlink Strava</a
+                  >
+                </li>
+                <li v-if="!hasStrava() && jwt()">
+                  <a class="dropdown-item" v-bind:href="stravaOauthLink()"
+                    >Link Strava</a
                   >
                 </li>
                 <li v-if="jwt()">
@@ -87,6 +97,7 @@
         v-bind:distanceFormat="distanceFormat"
         v-bind:timeFormat="timeFormat"
         v-bind:userId="userId"
+        v-bind:hasStrava="hasStrava"
       />
     </div>
   </div>
@@ -106,8 +117,13 @@
 import axios from "axios";
 import numeral from "numeral";
 export default {
+  created: function () {
+    if (this.$route.query.strava_initial_auth === "true") {
+      localStorage.has_strava = "true";
+    }
+  },
   methods: {
-    isActive: function (route) {
+    isActiveNav: function (route) {
       if (this.$route.path == route) {
         return true;
       } else {
@@ -134,6 +150,23 @@ export default {
     },
     userId: function () {
       return localStorage.user_id;
+    },
+    hasStrava: function () {
+      if (localStorage.has_strava === "false") {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    stravaOauthLink: function () {
+      let url = `https://www.strava.com/oauth/authorize?client_id=68303&response_type=code&redirect_uri=http://localhost:3000/strava_oauth/exchange_token&approval_prompt=force&scope=activity:read_all&state=${localStorage.user_id}`;
+      return url;
+    },
+    destroyStrava: function () {
+      axios.delete("/strava_oauth").then(() => {
+        localStorage.has_strava = "false";
+        this.$router.push("/?strava_removed=true");
+      });
     },
     addComment: function (run) {
       axios

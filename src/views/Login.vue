@@ -38,6 +38,7 @@ export default {
           localStorage.setItem("jwt", response.data.jwt);
           localStorage.setItem("user_id", response.data.user_id);
           localStorage.setItem("user_name", response.data.name);
+          localStorage.setItem("has_strava", response.data.has_strava);
           this.$router.push("/");
         })
         .catch((error) => {
