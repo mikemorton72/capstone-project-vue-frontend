@@ -32,14 +32,6 @@
                 >Users</a
               >
             </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                v-bind:class="{ active: isActive('/runs/new') }"
-                href="/runs/new"
-                >Add Run</a
-              >
-            </li>
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"

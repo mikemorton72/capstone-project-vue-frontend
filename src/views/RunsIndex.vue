@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Run Index</h1>
+    <RunsNewModal v-bind:runs="runs" />
     <div v-if="!loggedIn">Please log in to view posts</div>
     <RunCard
       v-for="run in runs"
@@ -17,9 +18,11 @@
 <script>
 import axios from "axios";
 import RunCard from "./RunCard.vue";
+import RunsNewModal from "./RunsNewModal.vue";
 export default {
   components: {
     RunCard,
+    RunsNewModal,
   },
   props: ["checkLoggedIn", "addComment", "timeFormat", "distanceFormat"],
   data: function () {
@@ -29,7 +32,6 @@ export default {
     };
   },
   created: function () {
-    console.log(this.$route);
     this.checkLoggedIn()
       .then(() => {
         this.runIndex();

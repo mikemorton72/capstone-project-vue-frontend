@@ -5,7 +5,6 @@ import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
 import RunsIndex from "../views/RunsIndex.vue";
 import UsersIndex from "../views/UsersIndex.vue";
-import RunsNew from "../views/RunsNew.vue";
 import UsersShow from "../views/UsersShow.vue";
 
 Vue.use(VueRouter);
@@ -30,11 +29,6 @@ const routes = [
     path: "/logout",
     name: "logout",
     component: Logout,
-  },
-  {
-    path: "/runs/new",
-    name: "runsNew",
-    component: RunsNew,
   },
   {
     path: "/users",
