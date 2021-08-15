@@ -1,7 +1,9 @@
 <template>
   <div>
-    <RunsNewModal v-bind:runs="runs" />
     <div v-if="!loggedIn">Please log in to view posts</div>
+    <br />
+    <RunsNewModal v-bind:runs="runs" />
+    <br />
     <RunCard
       v-for="run in runs"
       v-bind:key="run.id"

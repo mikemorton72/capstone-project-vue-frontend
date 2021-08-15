@@ -1,19 +1,32 @@
 <template>
   <div class="login">
-    <form v-on:submit.prevent="submit()">
-      <h1>Login</h1>
+    <br />
+    <div class="alert alert-danger" role="alert" v-if="hasErrors()">
       <ul>
         <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
       </ul>
-      <div>
-        <label>Email:</label>
-        <input type="email" v-model="newSessionParams.email" />
+    </div>
+    <form v-on:submit.prevent="submit()">
+      <div class="mb-3">
+        <label for="InputEmail1" class="form-label">Email address</label>
+        <input
+          type="email"
+          class="form-control"
+          id="InputEmail1"
+          aria-describedby="emailHelp"
+          v-model="newSessionParams.email"
+        />
       </div>
-      <div>
-        <label>Password:</label>
-        <input type="password" v-model="newSessionParams.password" />
+      <div class="mb-3">
+        <label for="InputPassword1" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="InputPassword1"
+          v-model="newSessionParams.password"
+        />
       </div>
-      <input type="submit" value="Submit" />
+      <button type="submit" class="btn btn-dark">Log In</button>
     </form>
   </div>
 </template>
@@ -47,6 +60,13 @@ export default {
           this.email = "";
           this.password = "";
         });
+    },
+    hasErrors: function () {
+      if (this.errors.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
     },
   },
 };

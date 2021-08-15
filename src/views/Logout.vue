@@ -12,7 +12,7 @@ export default {
     localStorage.removeItem("user_id");
     localStorage.removeItem("user_name");
     localStorage.removeItem("has_strava");
-    this.$router.push("/");
+    this.$router.push("/login");
   },
 };
 </script>
