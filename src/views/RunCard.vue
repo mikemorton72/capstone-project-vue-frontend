@@ -6,6 +6,7 @@
           src="https://www.nomadfoods.com/wp-content/uploads/2018/08/placeholder-1-e1533569576673.png"
           class="img-fluid rounded-start"
           alt=""
+          v-on:click="runShow(run.id)"
         />
       </div>
       <div class="col-md-8">
@@ -62,5 +63,10 @@
 <script>
 export default {
   props: ["run", "distanceFormat", "timeFormat", "addComment"],
+  methods: {
+    runShow: function (runId) {
+      this.$router.push(`/runs/${runId}`);
+    },
+  },
 };
 </script>

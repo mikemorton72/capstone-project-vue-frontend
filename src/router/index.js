@@ -4,6 +4,7 @@ import Signup from "../views/Signup.vue";
 import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
 import RunsIndex from "../views/RunsIndex.vue";
+import RunsShow from "../views/RunsShow.vue";
 import UsersIndex from "../views/UsersIndex.vue";
 import UsersShow from "../views/UsersShow.vue";
 
@@ -14,6 +15,11 @@ const routes = [
     path: "/",
     name: "RunIndex",
     component: RunsIndex,
+  },
+  {
+    path: "/runs/:id",
+    name: "runs show",
+    component: RunsShow,
   },
   {
     path: "/signup",
