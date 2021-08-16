@@ -1,20 +1,26 @@
 <template>
-  <div v-if="loggedIn">
-    <RunCard
-      v-bind:run="run"
-      v-bind:distanceFormat="distanceFormat"
-      v-bind:timeFormat="timeFormat"
-      v-bind:addComment="addComment"
-    />
+  <div>
+    <div v-if="loggedIn">
+      <RunMap v-if="mapLoaded()" v-bind:run="run" id="map" />
+      <div>{{ run }}</div>
+    </div>
   </div>
 </template>
+<style>
+#map {
+  margin: 20px auto;
+  width: 80%;
+  height: 400px;
+}
+</style>
 <script>
 import axios from "axios";
-import RunCard from "./RunCard.vue";
+import RunMap from "./RunMap.vue";
+
 export default {
   props: ["checkLoggedIn", "distanceFormat", "timeFormat", "addComment"],
   components: {
-    RunCard,
+    RunMap,
   },
   created: function () {
     this.checkLoggedIn()
@@ -29,6 +35,7 @@ export default {
     return {
       run: {},
       loggedIn: false,
+      routeCoordinates: [],
     };
   },
   methods: {
@@ -37,6 +44,13 @@ export default {
         this.run = response.data;
         this.loggedIn = true;
       });
+    },
+    mapLoaded: function () {
+      if (this.run.id) {
+        return true;
+      } else {
+        return false;
+      }
     },
   },
 };
