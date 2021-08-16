@@ -2,22 +2,24 @@
   <div>
     <div v-if="!loggedIn">Please log in to view posts</div>
     <br />
-    <RunsNewModal
-      v-bind:runs="runs"
-      v-bind:hasStrava="hasStrava"
-      v-bind:distanceFormat="distanceFormat"
-      v-bind:timeFormat="timeFormat"
-    />
-    <br />
-    <RunCard
-      v-for="run in runs"
-      v-bind:key="run.id"
-      v-bind:run="run"
-      v-bind:distanceFormat="distanceFormat"
-      v-bind:timeFormat="timeFormat"
-      v-bind:addComment="addComment"
-    />
-    <hr />
+    <div v-if="loggedIn">
+      <RunsNewModal
+        v-bind:runs="runs"
+        v-bind:hasStrava="hasStrava"
+        v-bind:distanceFormat="distanceFormat"
+        v-bind:timeFormat="timeFormat"
+      />
+      <br />
+      <RunCard
+        v-for="run in runs"
+        v-bind:key="run.id"
+        v-bind:run="run"
+        v-bind:distanceFormat="distanceFormat"
+        v-bind:timeFormat="timeFormat"
+        v-bind:addComment="addComment"
+      />
+      <hr />
+    </div>
   </div>
 </template>
 

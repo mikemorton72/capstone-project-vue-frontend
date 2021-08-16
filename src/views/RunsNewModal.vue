@@ -1,9 +1,15 @@
 <template>
   <div>
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-dark" v-on:click="showModal()">
-      New Run
-    </button>
+    <div id="new-run-button">
+      <button
+        type="button"
+        class="btn btn-secondary my-button"
+        v-on:click="showModal()"
+      >
+        Create New Run Post
+      </button>
+    </div>
 
     <!-- Modal -->
     <div
@@ -123,7 +129,7 @@
           </div>
           <div class="modal-body" v-if="stravaImport">
             <div
-              class="strava-import-list"
+              id="strava-import-list"
               v-for="run in stravaRuns"
               v-bind:key="run.id"
             >
@@ -134,11 +140,11 @@
               <button
                 type="button"
                 class="btn btn-secondary"
-                v-on:click="createStravaImport()"
+                v-on:click="createStravaImport(run)"
               >
                 Import
               </button>
-              <br/>
+              <br />
               <hr />
             </div>
           </div>
@@ -150,7 +156,12 @@
             >
               Cancel
             </button>
-            <button type="button" class="btn btn-dark" v-on:click="createRun()">
+            <button
+              type="button"
+              class="btn btn-dark"
+              v-on:click="createRun()"
+              v-if="showCreateRunButton"
+            >
               Create Run
             </button>
           </div>
@@ -168,7 +179,13 @@
 .centered-buttons {
   text-align: center;
 }
-.strava-import-list {
+.my-button {
+  width: 80%;
+}
+#strava-import-list {
+  text-align: center;
+}
+#new-run-button {
   text-align: center;
 }
 </style>
@@ -185,6 +202,7 @@ export default {
       stravaRuns: {},
       stravaImport: false,
       entryMethodSelected: false,
+      showCreateRunButton: true,
     };
   },
   methods: {
@@ -213,7 +231,7 @@ export default {
         this.manualEntry = false;
       } else {
         this.manualEntry = true;
-        this.hasMethodSelected = true;
+        this.entryMethodSelected = true;
       }
       document.getElementById("backdrop").style.display = "block";
       document.getElementById("newRunModal").style.display = "block";
@@ -225,6 +243,7 @@ export default {
       document.getElementById("newRunModal").classList.remove("show");
       this.manualEntryToggle();
       this.stravaImport = false;
+      this.showCreateRunButton = true;
     },
     totalSeconds: function () {
       let hours = parseInt(this.newRun.hours) || 0;
@@ -255,8 +274,32 @@ export default {
       axios.get("/strava_oauth/runs").then((response) => {
         this.stravaImport = true;
         this.entryMethodSelected = true;
+        this.showCreateRunButton = false;
         this.stravaRuns = response.data;
       });
+    },
+    createStravaImport: function (run) {
+      this.newRun.title = run.name;
+      this.newRun.distance = run.distance;
+      this.newRun.elapsed_time = run.elapsed_time;
+      this.newRun.start_latitude = run.start_latitude;
+      this.newRun.start_longitude = run.start_longitude;
+      this.newRun.summary_polyline = run.map.summary_polyline;
+      this.newRun.is_strava_import = true;
+      axios
+        .post("/runs", this.newRun)
+        .then((response) => {
+          this.runs.push(response.data);
+          this.newRun = {};
+          this.closeModal();
+          this.entryMethodSelected = false;
+          this.manualEntryToggle();
+          this.showCreateRunButton = true;
+        })
+        .catch((errors) => {
+          this.errors = errors.response.data.errors;
+          console.log(errors.response.data.errors);
+        });
     },
   },
 };
