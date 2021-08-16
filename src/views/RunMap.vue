@@ -20,20 +20,19 @@ export default {
   },
   methods: {
     doMapBox: function () {
-      console.log("goooo");
       mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_API;
       if (this.run.is_strava_import) {
         let route = polyline.toGeoJSON(this.run.summary_polyline);
         this.routeCoordinates = route.coordinates;
-        let centerLng = this.median(
+        let centerLng = this.midpoint(
           this.routeCoordinates.map((pair) => pair[0])
         );
-        let centerLat = this.median(
+        let centerLat = this.midpoint(
           this.routeCoordinates.map((pair) => pair[1])
         );
         const map = new mapboxgl.Map({
           container: "map", // container ID
-          style: "mapbox://styles/mapbox/navigation-night-v1", // style URL
+          style: "mapbox://styles/mapbox/navigation-day-v1", // style URL
           center: [centerLng, centerLat], // starting position
           zoom: 13, // starting zoom
           interactive: false,
@@ -59,7 +58,7 @@ export default {
               "line-cap": "round",
             },
             paint: {
-              "line-color": "#888",
+              "line-color": "#4C5CFA",
               "line-width": 8,
             },
           });
@@ -67,19 +66,25 @@ export default {
       } else {
         new mapboxgl.Map({
           container: "map", // container ID
-          style: "mapbox://styles/mapbox/navigation-night-v1", // style URL
+          style: "mapbox://styles/mapbox/navigation-day-v1", // style URL
           center: [this.run.start_longitude, this.run.start_latitude], // starting position
           zoom: 13, // starting zoom
           interactive: false,
         });
       }
     },
-    median: function (coordinates) {
-      const mid = Math.floor(coordinates.length / 2),
-        nums = [...coordinates].sort((a, b) => a - b);
-      return coordinates.length % 2 !== 0
-        ? nums[mid]
-        : (nums[mid - 1] + nums[mid]) / 2;
+    midpoint: function (array) {
+      let max = array[0];
+      let min = array[0];
+      array.forEach((number) => {
+        if (number > max) {
+          max = number;
+        }
+        if (number < min) {
+          min = number;
+        }
+      });
+      return (max + min) / 2;
     },
   },
 };
