@@ -70,6 +70,19 @@
                   Give your run a title.
                 </div>
               </div>
+              <div class="col-md-12">
+                <label for="newRunLocation" class="form-label">Location</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="newRunLocation"
+                  aria-describedby="runLocationHelp"
+                  v-model="newRun.location_name"
+                />
+                <div id="runLocationHelp" class="form-text">
+                  Run Location (i.e. Chicago, IL)
+                </div>
+              </div>
               <div class="col-md-6">
                 <label for="newRunDistance" class="form-label">Distance</label>
                 <input

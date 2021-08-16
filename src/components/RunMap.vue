@@ -3,6 +3,15 @@
     <div id="map"></div>
   </div>
 </template>
+<style>
+#marker {
+  background-image: url("https://images.emojiterra.com/google/android-10/512px/1f3c3-2642.png");
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+</style>
 <script>
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
@@ -64,13 +73,18 @@ export default {
           });
         });
       } else {
-        new mapboxgl.Map({
+        const map = new mapboxgl.Map({
           container: "map", // container ID
           style: "mapbox://styles/mapbox/navigation-day-v1", // style URL
           center: [this.run.start_longitude, this.run.start_latitude], // starting position
           zoom: 13, // starting zoom
           interactive: false,
         });
+        const el = document.createElement("div");
+        el.id = "marker";
+        new mapboxgl.Marker(el)
+          .setLngLat([this.run.start_longitude, this.run.start_latitude])
+          .addTo(map);
       }
     },
     midpoint: function (array) {
