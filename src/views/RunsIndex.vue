@@ -25,8 +25,8 @@
 
 <script>
 import axios from "axios";
-import RunCard from "./RunCard.vue";
-import RunsNewModal from "./RunsNewModal.vue";
+import RunCard from "../components/RunCard.vue";
+import RunsNewModal from "../components/RunsNewModal.vue";
 export default {
   components: {
     RunCard,

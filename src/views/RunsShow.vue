@@ -15,7 +15,7 @@
 </style>
 <script>
 import axios from "axios";
-import RunMap from "./RunMap.vue";
+import RunMap from "../components/RunMap.vue";
 
 export default {
   props: ["checkLoggedIn", "distanceFormat", "timeFormat", "addComment"],
