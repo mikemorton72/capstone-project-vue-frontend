@@ -1,10 +1,11 @@
 <template>
   <div class="card run-card mb-3 text-white bg-dark">
-    <div class="row g-0 hover-click" v-on:click="runShow(run.id)">
+    <div class="row g-0">
       <div class="col-md-4">
         <img
           v-bind:src="`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${run.start_longitude},${run.start_latitude},13,0/800x800?access_token=${mapBoxApiKey}`"
-          class="img-fluid rounded-start"
+          class="img-fluid rounded-start hover-click"
+          v-on:click="runShow(run.id)"
         />
       </div>
       <div class="col-md-8">
@@ -12,7 +13,7 @@
           <h2 class="card-title">
             {{ run.title }}
           </h2>
-          <h5 class="card-title">
+          <h5 class="card-title hover-click" v-on:click="showUser(run.user_id)">
             {{ run.user }}
             <img
               v-bind:src="run.user_image"
@@ -95,7 +96,7 @@
 </style>
 <script>
 export default {
-  props: ["run", "distanceFormat", "timeFormat", "addComment"],
+  props: ["run", "distanceFormat", "timeFormat", "addComment", "showUser"],
   data: function () {
     return {
       mapBoxApiKey: process.env.VUE_APP_MAPBOX_API,

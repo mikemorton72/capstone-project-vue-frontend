@@ -105,6 +105,7 @@
 <style>
 #app {
   background-color: grey;
+  min-height: 2000px;
 }
 </style>
 
@@ -206,8 +207,8 @@ export default {
           console.log(errors.response.data.errors);
         });
     },
-    showUser: function (user) {
-      this.$router.push(`/users/${user.id}`);
+    showUser: function (user_id) {
+      this.$router.push(`/users/${user_id}`);
     },
   },
 };

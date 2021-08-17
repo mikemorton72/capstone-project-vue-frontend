@@ -19,8 +19,8 @@
         v-bind:distanceFormat="distanceFormat"
         v-bind:timeFormat="timeFormat"
         v-bind:addComment="addComment"
+        v-bind:showUser="showUser"
       />
-      <hr />
     </div>
   </div>
 </template>
@@ -40,6 +40,7 @@ export default {
     "timeFormat",
     "distanceFormat",
     "hasStrava",
+    "showUser",
   ],
   data: function () {
     return {

@@ -3,7 +3,7 @@
     <div v-if="!loggedIn">Please log in to view users</div>
     <div v-if="loggedIn">
       <h1>{{ user.name }}</h1>
-      <img v-bind:src="user.image" style="width: 25%"/>
+      <img v-bind:src="user.image" style="width: 25%" />
       <div v-if="!isUsersPage()">
         <button
           v-if="isCurrentUserFollowing(user)"

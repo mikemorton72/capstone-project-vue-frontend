@@ -8,7 +8,7 @@
       <div class="row row-cols-1 row-cols-md-4 g-4">
         <div v-for="user in users" v-bind:key="user.id">
           <div class="card text-center text-white bg-dark" id="user-card">
-            <div v-on:click="showUser(user)">
+            <div v-on:click="showUser(user.id)">
               <img
                 v-bind:src="user.image"
                 class="card-img-top"
