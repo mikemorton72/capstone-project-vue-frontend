@@ -1,37 +1,39 @@
 <template>
   <div>
-    <br />
-    <h2 style="text-align: center; color: white;">All Users</h2>
-    <hr />
     <div v-if="!loggedIn">Please log in to view users</div>
-    <div class="row row-cols-1 row-cols-md-4 g-4">
-      <div v-for="user in users" v-bind:key="user.id">
-        <div class="card text-center text-white bg-dark" id="user-card">
-          <div v-on:click="showUser(user)">
-            <img
-              v-bind:src="user.image"
-              class="card-img-top"
-              style="height: 200px"
-            />
-            <div class="card-body">
-              <h5 class="card-title">{{ user.name }}</h5>
-              <p class="card-text">
-                Total miles: {{ distanceFormat(user.total_miles) }}
-              </p>
+    <div v-if="loggedIn">
+      <br />
+      <h2 style="text-align: center; color: white">All Users</h2>
+      <hr />
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div v-for="user in users" v-bind:key="user.id">
+          <div class="card text-center text-white bg-dark" id="user-card">
+            <div v-on:click="showUser(user)">
+              <img
+                v-bind:src="user.image"
+                class="card-img-top"
+                style="height: 200px"
+              />
+              <div class="card-body">
+                <h5 class="card-title">{{ user.name }}</h5>
+                <p class="card-text">
+                  Total miles: {{ distanceFormat(user.total_miles) }}
+                </p>
+              </div>
             </div>
+            <a
+              class="btn btn-secondary"
+              v-if="!isCurrentUserFollowing(user)"
+              v-on:click="createFollow(user)"
+              >Follow</a
+            >
+            <a
+              class="btn btn-warning"
+              v-if="isCurrentUserFollowing(user)"
+              v-on:click="destroyFollow(user)"
+              >Unfollow</a
+            >
           </div>
-          <a
-            class="btn btn-secondary"
-            v-if="!isCurrentUserFollowing(user)"
-            v-on:click="createFollow(user)"
-            >Follow</a
-          >
-          <a
-            class="btn btn-warning"
-            v-if="isCurrentUserFollowing(user)"
-            v-on:click="destroyFollow(user)"
-            >Unfollow</a
-          >
         </div>
       </div>
     </div>

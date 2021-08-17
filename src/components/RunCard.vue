@@ -2,15 +2,24 @@
   <div class="card run-card mb-3 text-white bg-dark">
     <div class="row g-0 hover-click" v-on:click="runShow(run.id)">
       <div class="col-md-4">
-        <img v-bind:src="run.user_image" class="img-fluid rounded-start" />
+        <img
+          v-bind:src="`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${run.start_longitude},${run.start_latitude},13,0/800x800?access_token=${mapBoxApiKey}`"
+          class="img-fluid rounded-start"
+        />
       </div>
       <div class="col-md-8">
         <div class="card-body">
           <h2 class="card-title">
-            {{ run.user }}
+            {{ run.title }}
           </h2>
-          <h5 class="card-title">{{ run.title }}</h5>
-          <p class="card-text">{{ run.location_name }}</p>
+          <h5 class="card-title">
+            {{ run.user }}
+            <img
+              v-bind:src="run.user_image"
+              style="height: 1.25em; margin: auto 5px"
+            />
+          </h5>
+          <p class="card-text">Location: {{ run.location_name }}</p>
           <p class="card-text">Distance: {{ distanceFormat(run.distance) }}</p>
           <p class="card-text">Time: {{ timeFormat(run.elapsed_time) }}</p>
         </div>
@@ -42,9 +51,11 @@
             v-bind:key="comment.id"
           >
             <strong
-              ><img v-bind:src="comment.user_image" style="height: 1.5em"/>  {{
-                comment.user_name
-              }}:</strong
+              ><img
+                v-bind:src="comment.user_image"
+                style="height: 1.25em; margin: auto 5px"
+              />
+              {{ comment.user_name }}:</strong
             >
             {{ comment.text }}
           </p>
@@ -85,6 +96,11 @@
 <script>
 export default {
   props: ["run", "distanceFormat", "timeFormat", "addComment"],
+  data: function () {
+    return {
+      mapBoxApiKey: process.env.VUE_APP_MAPBOX_API,
+    };
+  },
   methods: {
     runShow: function (runId) {
       this.$router.push(`/runs/${runId}`);

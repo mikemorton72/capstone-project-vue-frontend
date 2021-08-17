@@ -2,6 +2,8 @@
   <div>
     <div v-if="!loggedIn">Please log in to view posts</div>
     <br />
+    <h2 style="text-align: center; color: white">Run Feed</h2>
+    <hr />
     <div v-if="loggedIn">
       <RunsNewModal
         v-bind:runs="runs"

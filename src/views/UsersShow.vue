@@ -3,7 +3,7 @@
     <div v-if="!loggedIn">Please log in to view users</div>
     <div v-if="loggedIn">
       <h1>{{ user.name }}</h1>
-      <img v-bind:src="user.image" />
+      <img v-bind:src="user.image" style="width: 25%"/>
       <div v-if="!isUsersPage()">
         <button
           v-if="isCurrentUserFollowing(user)"
@@ -20,28 +20,24 @@
       </div>
       <p>Total miles: {{ distanceFormat(user.total_miles) }}</p>
       <h3>Runs</h3>
-      <div v-for="run in user.runs" v-bind:key="run.id">
-        <p>{{ run.title }}</p>
-        <p>Distance: {{ distanceFormat(run.distance) }} miles</p>
-        <p>Time: {{ timeFormat(run.elapsed_time) }}</p>
-        <br />
-        <p>Comments:</p>
-        <p v-for="comment in run.comments" v-bind:key="comment.id">
-          {{ comment.user_name }}: {{ comment.text }}
-        </p>
-        <input type="text" v-model="run.newComment" /><button
-          v-on:click="addComment(run)"
-        >
-          Add Comment
-        </button>
-        <hr />
-      </div>
+      <RunCard
+        v-for="run in user.runs"
+        v-bind:key="run.id"
+        v-bind:run="run"
+        v-bind:distanceFormat="distanceFormat"
+        v-bind:timeFormat="timeFormat"
+        v-bind:addComment="addComment"
+      />
     </div>
   </div>
 </template>
 <script>
 import axios from "axios";
+import RunCard from "../components/RunCard.vue";
 export default {
+  components: {
+    RunCard,
+  },
   props: [
     "checkLoggedIn",
     "isCurrentUserFollowing",
