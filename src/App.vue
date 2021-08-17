@@ -105,7 +105,7 @@
 <style>
 #app {
   background-color: grey;
-  min-height: 2000px;
+  min-height: 100vh;
 }
 </style>
 

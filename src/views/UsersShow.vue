@@ -21,7 +21,7 @@
       <p>Total miles: {{ distanceFormat(user.total_miles) }}</p>
       <h3>Runs</h3>
       <RunCard
-        v-for="run in user.runs"
+        v-for="run in runs"
         v-bind:key="run.id"
         v-bind:run="run"
         v-bind:distanceFormat="distanceFormat"
@@ -51,6 +51,7 @@ export default {
   data: function () {
     return {
       user: {},
+      runs: {},
       loggedIn: false,
     };
   },
@@ -58,6 +59,7 @@ export default {
     this.checkLoggedIn()
       .then(() => {
         this.getUser();
+        this.userRunIndex(this.$route.params.id);
         this.loggedIn = true;
       })
       .catch(() => {
@@ -68,6 +70,12 @@ export default {
     getUser: function () {
       axios.get(`/users/${this.$route.params.id}`).then((response) => {
         this.user = response.data;
+      });
+    },
+    userRunIndex: function (user_id) {
+      axios.get(`/runs?user_id=${user_id}`).then((response) => {
+        console.log(response.data);
+        this.runs = response.data;
       });
     },
     isUsersPage: function () {
