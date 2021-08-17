@@ -1,51 +1,63 @@
 <template>
-  <div class="card run-card mb-3">
-    <div class="row g-0">
+  <div class="card run-card mb-3 text-white bg-dark">
+    <div class="row g-0 hover-click" v-on:click="runShow(run.id)">
       <div class="col-md-4">
-        <img
-          src="https://www.nomadfoods.com/wp-content/uploads/2018/08/placeholder-1-e1533569576673.png"
-          class="img-fluid rounded-start"
-          alt=""
-          v-on:click="runShow(run.id)"
-        />
+        <img v-bind:src="run.user_image" class="img-fluid rounded-start" />
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h3 class="card-title">
-            <img v-bind:src="run.user_image" style="width: 40px" />
+          <h2 class="card-title">
             {{ run.user }}
-          </h3>
+          </h2>
           <h5 class="card-title">{{ run.title }}</h5>
+          <p class="card-text">{{ run.location_name }}</p>
           <p class="card-text">Distance: {{ distanceFormat(run.distance) }}</p>
           <p class="card-text">Time: {{ timeFormat(run.elapsed_time) }}</p>
-          <p>
-            <button
-              class="btn btn-dark"
-              type="button"
-              data-bs-toggle="collapse"
-              v-bind:data-bs-target="`#comments${run.id}`"
-              aria-expanded="false"
-              v-bind:aria-controls="`comments${run.id}`"
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p>
+          <button
+            class="btn btn-secondary"
+            id="show-comments-button"
+            type="button"
+            data-bs-toggle="collapse"
+            v-bind:data-bs-target="`#comments${run.id}`"
+            aria-expanded="false"
+            v-bind:aria-controls="`comments${run.id}`"
+          >
+            Comments {{ `  (${run.comments.length})` }}
+          </button>
+        </p>
+        <div
+          class="collapse card-text row"
+          v-bind:id="`comments${run.id}`"
+          style="margin: 0px 25px"
+        >
+          <p
+            class="card-text"
+            v-for="comment in run.comments"
+            v-bind:key="comment.id"
+          >
+            <strong
+              ><img v-bind:src="comment.user_image" style="height: 1.5em"/>  {{
+                comment.user_name
+              }}:</strong
             >
-              <img src="../assets/comments.png" style="width: 20px" />{{
-                `  (${run.comments.length})`
-              }}
-            </button>
+            {{ comment.text }}
           </p>
-          <div class="collapse card-text" v-bind:id="`comments${run.id}`">
-            <p
-              class="card-text"
-              v-for="comment in run.comments"
-              v-bind:key="comment.id"
-            >
-              <strong>{{ comment.user_name }}:</strong> {{ comment.text }}
-            </p>
-            <input type="text" v-model="run.newComment" /><button
+          <p>
+            <input type="text" v-model="run.newComment" />
+            <button
               v-on:click="addComment(run)"
+              class="btn btn-secondary"
+              style="margin: 5px 20px; line-height: 1em"
             >
               Add Comment
             </button>
-          </div>
+          </p>
         </div>
       </div>
     </div>
@@ -57,7 +69,17 @@
   float: none;
   margin-bottom: 10px;
   align-content: "center";
-  width: 80%;
+  width: 60%;
+}
+.hover-click {
+  cursor: pointer;
+}
+#show-comments-button {
+  border-radius: 10%;
+  text-align: center;
+  margin-top: 15px;
+  width: 100%;
+  line-height: 0.7;
 }
 </style>
 <script>

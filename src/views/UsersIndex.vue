@@ -1,12 +1,12 @@
 <template>
   <div>
     <br />
-    <h2 style="text-align: center">All Users</h2>
+    <h2 style="text-align: center; color: white;">All Users</h2>
     <hr />
     <div v-if="!loggedIn">Please log in to view users</div>
     <div class="row row-cols-1 row-cols-md-4 g-4">
       <div v-for="user in users" v-bind:key="user.id">
-        <div class="card text-center" id="user-card">
+        <div class="card text-center text-white bg-dark" id="user-card">
           <div v-on:click="showUser(user)">
             <img
               v-bind:src="user.image"
@@ -21,13 +21,13 @@
             </div>
           </div>
           <a
-            class="btn btn-dark"
+            class="btn btn-secondary"
             v-if="!isCurrentUserFollowing(user)"
             v-on:click="createFollow(user)"
             >Follow</a
           >
           <a
-            class="btn btn-secondary"
+            class="btn btn-warning"
             v-if="isCurrentUserFollowing(user)"
             v-on:click="destroyFollow(user)"
             >Unfollow</a
@@ -41,8 +41,7 @@
 #user-card {
   cursor: pointer;
   align-content: "center";
-  margin: 20px auto;
-  width: 20vw;
+  width: 100%;
 }
 </style>
 <script>

@@ -4,7 +4,7 @@
     <div id="new-run-button">
       <button
         type="button"
-        class="btn btn-secondary my-button"
+        class="btn btn-dark my-button"
         v-on:click="showModal()"
       >
         Create New Run Post
@@ -193,7 +193,7 @@
   text-align: center;
 }
 .my-button {
-  width: 80%;
+  width: 60%;
 }
 #strava-import-list {
   text-align: center;

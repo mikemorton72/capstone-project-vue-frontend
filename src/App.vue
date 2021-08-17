@@ -102,6 +102,11 @@
     </div>
   </div>
 </template>
+<style>
+#app {
+  background-color: grey;
+}
+</style>
 
 <script>
 import axios from "axios";
