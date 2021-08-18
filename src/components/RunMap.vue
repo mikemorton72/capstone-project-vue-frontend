@@ -44,7 +44,8 @@ export default {
           style: "mapbox://styles/mapbox/navigation-day-v1", // style URL
           center: [centerLng, centerLat], // starting position
           zoom: 13, // starting zoom
-          interactive: false,
+          scrollZoom: false,
+          doubleClickZoom: false,
         });
         map.on("load", () => {
           map.addSource("route", {
@@ -71,6 +72,7 @@ export default {
               "line-width": 8,
             },
           });
+          map.addControl(new mapboxgl.NavigationControl());
         });
       } else {
         const map = new mapboxgl.Map({
@@ -78,13 +80,16 @@ export default {
           style: "mapbox://styles/mapbox/navigation-day-v1", // style URL
           center: [this.run.start_longitude, this.run.start_latitude], // starting position
           zoom: 13, // starting zoom
-          interactive: false,
+          scrollZoom: false,
+          doubleClickZoom: false,
         });
         const el = document.createElement("div");
         el.id = "marker";
         new mapboxgl.Marker(el)
           .setLngLat([this.run.start_longitude, this.run.start_latitude])
           .addTo(map);
+
+        map.addControl(new mapboxgl.NavigationControl());
       }
     },
     midpoint: function (array) {

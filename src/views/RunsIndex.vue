@@ -1,10 +1,12 @@
 <template>
   <div>
-    <div v-if="!loggedIn">Please log in to view posts</div>
+    <div v-if="!loggedIn" style="text-align: center">
+      Please log in to view posts
+    </div>
     <br />
-    <h2 style="text-align: center; color: white">Run Feed</h2>
-    <hr />
     <div v-if="loggedIn">
+      <h2 style="text-align: center; color: white">Run Feed</h2>
+      <hr />
       <RunsNewModal
         v-bind:runs="runs"
         v-bind:hasStrava="hasStrava"

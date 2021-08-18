@@ -1,22 +1,61 @@
 <template>
   <div>
     <div v-if="loggedIn">
+      <br />
+      <div
+        class="card text-white bg-dark text-center"
+        style="width: 100%; text-align: center"
+      >
+        <div class="card-body">
+          <h2>{{ run.title }}</h2>
+          <h5>Distance: {{ distanceFormat(run.distance) }}</h5>
+          <h5>Time: {{ timeFormat(run.elapsed_time) }}</h5>
+        </div>
+      </div>
       <RunMap v-if="mapLoaded()" v-bind:run="run" id="map" />
-      <div>{{ run }}</div>
+      <div class="card text-white bg-dark">
+        <div style="margin: 10px 30px">
+          <h5 class="card-text">Comments</h5>
+          <p></p>
+          <p
+            class="card-text"
+            v-for="comment in run.comments"
+            v-bind:key="comment.id"
+          >
+            <strong
+              ><img
+                v-bind:src="comment.user_image"
+                style="height: 1.25em; margin: auto 5px"
+              />
+              {{ comment.user_name }}:</strong
+            >
+            {{ comment.text }}
+          </p>
+          <p>
+            <input type="text" v-model="run.newComment" />
+            <button
+              v-on:click="addComment(run)"
+              class="btn btn-secondary"
+              style="margin: 5px 20px; line-height: 1em"
+            >
+              Add Comment
+            </button>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <style>
 #map {
-  margin: 20px auto;
-  width: 80%;
-  height: 400px;
+  margin: 0 auto;
+  width: 100%;
+  height: 40vw;
 }
 </style>
 <script>
 import axios from "axios";
 import RunMap from "../components/RunMap.vue";
-
 export default {
   props: ["checkLoggedIn", "distanceFormat", "timeFormat", "addComment"],
   components: {
