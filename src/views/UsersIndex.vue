@@ -22,13 +22,13 @@
               </div>
             </div>
             <a
-              class="btn btn-secondary"
+              class="btn btn-warning"
               v-if="!isCurrentUserFollowing(user)"
               v-on:click="createFollow(user)"
               >Follow</a
             >
             <a
-              class="btn btn-warning"
+              class="btn btn-secondary"
               v-if="isCurrentUserFollowing(user)"
               v-on:click="destroyFollow(user)"
               >Unfollow</a

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Button trigger modal -->
-    <div id="new-run-button">
+    <div id="new-run-button-div">
       <button
         type="button"
         class="btn btn-dark my-button"
@@ -20,7 +20,7 @@
       aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content text-white bg-dark">
           <div class="modal-header">
             <h5 class="modal-title" id="newRunModalLabel">New Run</h5>
             <button
@@ -198,7 +198,7 @@
 #strava-import-list {
   text-align: center;
 }
-#new-run-button {
+#new-run-button-div {
   text-align: center;
 }
 </style>
