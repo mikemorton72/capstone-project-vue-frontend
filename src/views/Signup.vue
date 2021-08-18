@@ -4,6 +4,32 @@
       <form v-on:submit.prevent="submit()" style="margin: 10px 20px">
         <h3 style="text-align: center">Sign Up</h3>
         <hr />
+        <div style="text-align: center">
+          <h5 style="text-align: center">Create Your Avatar</h5>
+          <p>
+            <img id="avatar-preview" style="width: 15em" />
+          </p>
+          <p>
+            <button
+              type="button"
+              class="btn btn-secondary avatar-button"
+              style="line-height: 0.5em; width: 12em"
+              v-on:click="changeAvatarGender()"
+            >
+              Change Gender
+            </button>
+          </p>
+          <p>
+            <button
+              type="button"
+              class="btn btn-secondary avatar-button"
+              style="line-height: 0.5em; width: 12em"
+              v-on:click="getAvatarImage()"
+            >
+              Randomize
+            </button>
+          </p>
+        </div>
         <div class="mb-3">
           <label for="Inputname1" class="form-label">Name</label>
           <input
@@ -71,13 +97,16 @@ export default {
   data: function () {
     return {
       newUserParams: {},
-      gender: "",
-      avatarImageUrl: `https://avatars.dicebear.com/api/male/dsgas.svg`,
+      gender: "male",
       errors: [],
     };
   },
+  mounted: function () {
+    this.getAvatarImage();
+  },
   methods: {
     submit: function () {
+      this.newUserParams.image = document.getElementById("avatar-preview").src;
       axios
         .post("/users", this.newUserParams)
         .then((response) => {
@@ -94,6 +123,21 @@ export default {
       } else {
         return false;
       }
+    },
+    getAvatarImage: function () {
+      document.getElementById(
+        "avatar-preview"
+      ).src = `https://avatars.dicebear.com/api/${
+        this.gender
+      }/${Math.random()}.svg?mood=happy`;
+    },
+    changeAvatarGender: function () {
+      if (this.gender === "male") {
+        this.gender = "female";
+      } else {
+        this.gender = "male";
+      }
+      this.getAvatarImage();
     },
   },
 };
