@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div v-if="!loggedIn" style="text-align: center">Please log in to view users</div>
+    <div v-if="!loggedIn" style="text-align: center">
+      Please log in to view users
+    </div>
     <div v-if="loggedIn">
       <br />
       <h2 style="text-align: center; color: white">All Users</h2>
