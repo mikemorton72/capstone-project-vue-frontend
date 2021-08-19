@@ -28,6 +28,7 @@
           <p class="card-text">Location: {{ run.location_name }}</p>
           <p class="card-text">Distance: {{ distanceFormat(run.distance) }}</p>
           <p class="card-text">Time: {{ timeFormat(run.elapsed_time) }}</p>
+          <p class="card-text">Pace: {{ run.pace }}</p>
         </div>
       </div>
     </div>

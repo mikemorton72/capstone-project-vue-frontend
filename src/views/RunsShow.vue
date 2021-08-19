@@ -50,7 +50,7 @@
 #map {
   margin: 0 auto;
   width: 100%;
-  height: 40vw;
+  height: 30vw;
 }
 </style>
 <script>
