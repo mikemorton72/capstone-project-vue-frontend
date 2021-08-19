@@ -70,7 +70,7 @@
                   Give your run a title.
                 </div>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-8">
                 <label for="newRunLocation" class="form-label">Location</label>
                 <input
                   type="text"
@@ -78,9 +78,25 @@
                   id="newRunLocation"
                   aria-describedby="runLocationHelp"
                   v-model="newRun.location_name"
+                  v-bind:disabled="usingMyCurrentLocation"
                 />
                 <div id="runLocationHelp" class="form-text">
                   Run Location (i.e. Chicago, IL)
+                </div>
+              </div>
+              <div class="col-md-4">
+                <br />
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="currentLocationCheckbox"
+                    v-on:click="getCurrentLocation()"
+                  />
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Use Current Location
+                  </label>
                 </div>
               </div>
               <div class="col-md-6">
@@ -216,9 +232,23 @@ export default {
       stravaImport: false,
       entryMethodSelected: false,
       showCreateRunButton: true,
+      usingMyCurrentLocation: false,
     };
   },
   methods: {
+    getCurrentLocation: function () {
+      if (this.usingMyCurrentLocation) {
+        this.newRun.location_name = "";
+        this.usingMyCurrentLocation = !this.usingMyCurrentLocation;
+      } else {
+        this.newRun.location_name = "Current Location";
+        this.usingMyCurrentLocation = !this.usingMyCurrentLocation;
+        navigator.geolocation.getCurrentPosition((position) => {
+          this.newRun.start_latitude = position.coords.latitude;
+          this.newRun.start_longitude = position.coords.longitude;
+        });
+      }
+    },
     stravaDateFormat: function (dateString) {
       return dateString.slice(0, 10);
     },
@@ -268,6 +298,7 @@ export default {
     createRun: function () {
       this.newRun.is_strava_import = false;
       this.newRun.elapsed_time = this.totalSeconds();
+      this.newRun.using_my_current_location = this.usingMyCurrentLocation;
       this.convertDistanceUnitsToMeters();
       axios
         .post("/runs", this.newRun)
