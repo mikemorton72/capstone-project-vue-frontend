@@ -38,6 +38,18 @@
           </div>
         </div>
       </div>
+      <div style="text-align: center">
+        <button
+          class="btn btn-dark pagination-button"
+          v-on:click="previousPage()"
+        >
+          Previous
+        </button>
+        <span>Page {{ this.currentPage }}</span>
+        <button class="btn btn-dark pagination-button" v-on:click="nextPage()" v-if="users.length > 0">
+          Next
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -63,9 +75,11 @@ export default {
     return {
       users: {},
       loggedIn: false,
+      currentPage: null,
     };
   },
   created: function () {
+    this.getCurrentPage();
     this.checkLoggedIn()
       .then(() => {
         this.getUsers();
@@ -77,7 +91,7 @@ export default {
   },
   methods: {
     getUsers: function () {
-      axios.get("/users").then((response) => {
+      axios.get("/users", { params: this.$route.query }).then((response) => {
         let userIndex = response.data;
         for (let i = 0; i < userIndex.length; i++) {
           if (userIndex[i].id === parseInt(localStorage.user_id)) {
@@ -86,6 +100,25 @@ export default {
         }
         this.users = userIndex;
       });
+    },
+    getCurrentPage: function () {
+      if (this.$route.query.page) {
+        this.currentPage = parseInt(this.$route.query.page);
+      } else {
+        this.currentPage = 1;
+      }
+    },
+    nextPage: function () {
+      this.$router.push(`/users?page=${this.currentPage + 1}`);
+      this.currentPage += 1;
+      this.getUsers();
+    },
+    previousPage: function () {
+      if (this.currentPage != 1) {
+        this.$router.push(`/users?page=${this.currentPage - 1}`);
+        this.currentPage -= 1;
+        this.getUsers();
+      }
     },
   },
 };

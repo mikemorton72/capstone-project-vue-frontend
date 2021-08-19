@@ -42,11 +42,15 @@
           </button>
         </p>
       </div>
-
-      <h2 style="text-align: center; color: white">
-        {{ `${user.name}'s Runs` }}
-      </h2>
       <hr />
+      <RunsNewModal
+        v-bind:runs="runs"
+        v-bind:hasStrava="hasStrava"
+        v-bind:distanceFormat="distanceFormat"
+        v-bind:timeFormat="timeFormat"
+        v-if="isUsersPage()"
+      />
+      <br v-if="isUsersPage()" />
       <RunCard
         v-for="run in runs"
         v-bind:key="run.id"
@@ -66,9 +70,11 @@
 <script>
 import axios from "axios";
 import RunCard from "../components/RunCard.vue";
+import RunsNewModal from "../components/RunsNewModal";
 export default {
   components: {
     RunCard,
+    RunsNewModal,
   },
   props: [
     "checkLoggedIn",
@@ -79,6 +85,7 @@ export default {
     "distanceFormat",
     "timeFormat",
     "user_id",
+    "hasStrava",
   ],
   data: function () {
     return {

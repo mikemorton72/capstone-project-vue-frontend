@@ -25,25 +25,26 @@
       />
       <div style="text-align: center">
         <button
-          class="btn btn-dark run-pagination-button"
+          class="btn btn-dark pagination-button"
           v-on:click="previousPage()"
         >
           Previous
         </button>
         <span>Page {{ this.currentPage }}</span>
         <button
-          class="btn btn-dark run-pagination-button"
+          class="btn btn-dark pagination-button"
           v-on:click="nextPage()"
+          v-if="runs.length > 0"
         >
           Next
         </button>
       </div>
-        <br />
+      <br />
     </div>
   </div>
 </template>
-<style scoped>
-.run-pagination-button {
+<style>
+.pagination-button {
   width: 100px;
   margin: 10px 20px;
 }
