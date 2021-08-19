@@ -42,13 +42,20 @@
         <button
           class="btn btn-dark pagination-button"
           v-on:click="previousPage()"
+          v-if="currentPage != 1"
         >
           Previous
         </button>
+        <span v-else style="margin: auto 70px"></span>
         <span>Page {{ this.currentPage }}</span>
-        <button class="btn btn-dark pagination-button" v-on:click="nextPage()" v-if="users.length > 0">
+        <button
+          class="btn btn-dark pagination-button"
+          v-on:click="nextPage()"
+          v-if="users.length == 8"
+        >
           Next
         </button>
+        <span v-else style="margin: auto 70px"></span>
       </div>
     </div>
   </div>

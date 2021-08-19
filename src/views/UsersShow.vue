@@ -59,6 +59,25 @@
         v-bind:timeFormat="timeFormat"
         v-bind:addComment="addComment"
       />
+      <div style="text-align: center">
+        <button
+          class="btn btn-dark pagination-button"
+          v-on:click="previousPage()"
+          v-if="currentPage != 1"
+        >
+          Previous
+        </button>
+        <span v-else style="margin: auto 70px"></span>
+        <span>Page {{ this.currentPage }}</span>
+        <button
+          class="btn btn-dark pagination-button"
+          v-on:click="nextPage()"
+          v-if="runs.length == 8"
+        >
+          Next
+        </button>
+        <span v-else style="margin: auto 70px"></span>
+      </div>
     </div>
   </div>
 </template>
@@ -92,9 +111,12 @@ export default {
       user: {},
       runs: {},
       loggedIn: false,
+      currentPage: null,
     };
   },
   created: function () {
+    console.log(this.$route);
+    this.getCurrentPage();
     this.checkLoggedIn()
       .then(() => {
         this.getUser();
@@ -112,16 +134,36 @@ export default {
       });
     },
     userRunIndex: function (user_id) {
-      axios.get(`/runs?user_id=${user_id}`).then((response) => {
-        console.log(response.data);
-        this.runs = response.data;
-      });
+      axios
+        .get(`/runs?user_id=${user_id}`, { params: this.$route.query })
+        .then((response) => {
+          this.runs = response.data;
+        });
     },
     isUsersPage: function () {
       if (this.$route.params.id == localStorage.user_id) {
         return true;
       } else {
         return false;
+      }
+    },
+    getCurrentPage: function () {
+      if (this.$route.query.page) {
+        this.currentPage = parseInt(this.$route.query.page);
+      } else {
+        this.currentPage = 1;
+      }
+    },
+    nextPage: function () {
+      this.$router.push(`${this.$route.path}?page=${this.currentPage + 1}`);
+      this.currentPage += 1;
+      this.userRunIndex(this.$route.params.id);
+    },
+    previousPage: function () {
+      if (this.currentPage != 1) {
+        this.$router.push(`${this.$route.path}?page=${this.currentPage - 1}`);
+        this.currentPage -= 1;
+        this.userRunIndex(this.$route.params.id);
       }
     },
   },
