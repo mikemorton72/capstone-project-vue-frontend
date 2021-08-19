@@ -272,7 +272,8 @@ export default {
       axios
         .post("/runs", this.newRun)
         .then((response) => {
-          this.runs.push(response.data);
+          this.runs.unshift(response.data);
+          this.runs.pop();
           this.newRun = {};
           this.closeModal();
           this.entryMethodSelected = false;
@@ -302,7 +303,8 @@ export default {
       axios
         .post("/runs", this.newRun)
         .then((response) => {
-          this.runs.push(response.data);
+          this.runs.unshift(response.data);
+          this.runs.pop();
           this.newRun = {};
           this.closeModal();
           this.entryMethodSelected = false;

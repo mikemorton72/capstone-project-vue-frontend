@@ -10,9 +10,14 @@
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h2 class="card-title">
+          <h3 class="card-title">
             {{ run.title }}
-          </h2>
+            <img
+              src="../assets/strava.png"
+              style="height: 1em"
+              v-if="run.is_strava_import"
+            />
+          </h3>
           <h5 class="card-title hover-click" v-on:click="showUser(run.user_id)">
             {{ run.user }}
             <img

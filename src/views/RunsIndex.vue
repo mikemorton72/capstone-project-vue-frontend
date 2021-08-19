@@ -23,9 +23,31 @@
         v-bind:addComment="addComment"
         v-bind:showUser="showUser"
       />
+      <div style="text-align: center">
+        <button
+          class="btn btn-dark run-pagination-button"
+          v-on:click="previousPage()"
+        >
+          Previous
+        </button>
+        <span>Page {{ this.currentPage }}</span>
+        <button
+          class="btn btn-dark run-pagination-button"
+          v-on:click="nextPage()"
+        >
+          Next
+        </button>
+      </div>
+        <br />
     </div>
   </div>
 </template>
+<style scoped>
+.run-pagination-button {
+  width: 100px;
+  margin: 10px 20px;
+}
+</style>
 
 <script>
 import axios from "axios";
@@ -48,9 +70,11 @@ export default {
     return {
       runs: {},
       loggedIn: false,
+      currentPage: null,
     };
   },
   created: function () {
+    this.getCurrentPage();
     this.checkLoggedIn()
       .then(() => {
         this.runIndex();
@@ -62,9 +86,28 @@ export default {
   },
   methods: {
     runIndex: function () {
-      axios.get("/runs").then((response) => {
+      axios.get("/runs", { params: this.$route.query }).then((response) => {
         this.runs = response.data;
       });
+    },
+    getCurrentPage: function () {
+      if (this.$route.query.page) {
+        this.currentPage = parseInt(this.$route.query.page);
+      } else {
+        this.currentPage = 1;
+      }
+    },
+    nextPage: function () {
+      this.$router.push(`/?page=${this.currentPage + 1}`);
+      this.currentPage += 1;
+      this.runIndex();
+    },
+    previousPage: function () {
+      if (this.currentPage != 1) {
+        this.$router.push(`/?page=${this.currentPage - 1}`);
+        this.currentPage -= 1;
+        this.runIndex();
+      }
     },
   },
 };
