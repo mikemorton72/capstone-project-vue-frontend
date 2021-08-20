@@ -336,6 +336,7 @@ export default {
       this.newRun.start_longitude = run.start_longitude;
       this.newRun.summary_polyline = run.map.summary_polyline;
       this.newRun.is_strava_import = true;
+      this.newRun.strava_id = run.id;
       axios
         .post("/runs", this.newRun)
         .then((response) => {
