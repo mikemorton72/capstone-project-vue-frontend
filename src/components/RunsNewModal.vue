@@ -54,9 +54,9 @@
             </p>
           </div>
           <div class="modal-body" v-if="manualEntry">
-            <ul v-for="error in errors" v-bind:key="error.id">
-              <li>{{ error }}</li>
-            </ul>
+            <div v-if="hasErrors()" style="text-align: center">
+              <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+            </div>
             <form class="row g-3">
               <div class="col-md-12">
                 <label for="newRunTitle" class="form-label">Title</label>
@@ -391,6 +391,13 @@ export default {
           this.errors = errors.response.data.errors;
           console.log(errors.response.data.errors);
         });
+    },
+    hasErrors: function () {
+      if (this.errors.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
     },
   },
 };

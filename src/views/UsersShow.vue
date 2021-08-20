@@ -120,7 +120,6 @@ export default {
     };
   },
   created: function () {
-    console.log(this.$route);
     this.getCurrentPage();
     this.checkLoggedIn()
       .then(() => {

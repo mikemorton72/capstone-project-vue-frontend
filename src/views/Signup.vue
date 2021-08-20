@@ -30,6 +30,9 @@
             </button>
           </p>
         </div>
+        <div v-if="hasErrors()" style="text-align: center">
+          <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+        </div>
         <div style="width: 70%; margin: 0px auto">
           <div class="mb-3">
             <label for="Inputname1" class="form-label">Name</label>
@@ -72,9 +75,6 @@
             />
           </div>
         </div>
-        <div v-if="hasErrors()" style="text-align: center">
-          <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
-        </div>
         <div style="text-align: center">
           <button type="submit" class="btn btn-secondary">Sign Up</button>
         </div>
@@ -110,8 +110,7 @@ export default {
       this.newUserParams.image = document.getElementById("avatar-preview").src;
       axios
         .post("/users", this.newUserParams)
-        .then((response) => {
-          console.log(response.data);
+        .then(() => {
           this.$router.push("/login");
         })
         .catch((error) => {

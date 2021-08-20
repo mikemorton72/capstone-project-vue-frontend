@@ -26,9 +26,11 @@
             />
           </h5>
           <p class="card-text">Location: {{ run.location_name }}</p>
-          <p class="card-text">Distance: {{ distanceFormat(run.distance) }}</p>
+          <p class="card-text">
+            Distance: {{ distanceFormat(run.distance) }} miles
+          </p>
           <p class="card-text">Time: {{ timeFormat(run.elapsed_time) }}</p>
-          <p class="card-text">Pace: {{ run.pace }}</p>
+          <p class="card-text">Pace: {{ run.pace }} min/mi</p>
         </div>
       </div>
     </div>

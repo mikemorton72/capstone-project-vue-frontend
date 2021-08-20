@@ -4,6 +4,9 @@
       <form v-on:submit.prevent="submit()" style="margin: 10px 20px">
         <h3 style="text-align: center">Login</h3>
         <hr />
+        <div v-if="hasErrors()" style="text-align: center">
+          <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+        </div>
         <div style="width: 70%; margin: 0px auto">
           <div class="mb-3">
             <label for="InputEmail1" class="form-label">Email address</label>
@@ -23,9 +26,6 @@
               id="InputPassword1"
               v-model="newSessionParams.password"
             />
-          </div>
-          <div v-if="hasErrors()" style="text-align: center">
-            <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
           </div>
           <div style="text-align: center">
             <button type="submit" class="btn btn-secondary">Log In</button>
