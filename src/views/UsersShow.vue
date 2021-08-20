@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div v-if="!loggedIn">Please log in to view users</div>
+    <div v-if="!loggedIn" style="text-align: center">
+      <br />
+      <p style="color: white">
+        Please <a href="/login" style="color: white">log in</a> to view users
+      </p>
+    </div>
     <div v-if="loggedIn">
       <div
         class="card mb-3 text-white bg-dark run-card"

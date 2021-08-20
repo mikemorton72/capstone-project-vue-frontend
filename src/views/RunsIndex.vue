@@ -1,7 +1,10 @@
 <template>
   <div>
     <div v-if="!loggedIn" style="text-align: center">
-      Please log in to view posts
+      <br />
+      <p style="color: white">
+        Please <a href="/login" style="color: white">log in</a> to view posts
+      </p>
     </div>
     <br />
     <div v-if="loggedIn">

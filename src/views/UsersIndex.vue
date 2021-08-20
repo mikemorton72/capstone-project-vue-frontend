@@ -1,7 +1,10 @@
 <template>
   <div>
     <div v-if="!loggedIn" style="text-align: center">
-      Please log in to view users
+      <br />
+      <p style="color: white">
+        Please <a href="/login" style="color: white">log in</a> to view users
+      </p>
     </div>
     <div v-if="loggedIn">
       <br />
@@ -39,6 +42,7 @@
         </div>
       </div>
       <div style="text-align: center">
+        <br />
         <button
           class="btn btn-dark pagination-button"
           v-on:click="previousPage()"
@@ -56,6 +60,7 @@
           Next
         </button>
         <span v-else style="margin: auto 70px"></span>
+        <div style="height: 20px"></div>
       </div>
     </div>
   </div>

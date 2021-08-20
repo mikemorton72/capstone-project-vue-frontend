@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div v-if="!loggedIn" style="text-align: center">
+      <br />
+      <p style="color: white">
+        Please <a href="/login" style="color: white">log in</a> to view posts
+      </p>
+    </div>
     <div v-if="loggedIn">
       <br />
       <div
@@ -15,7 +21,9 @@
       <RunMap v-if="mapLoaded()" v-bind:run="run" id="map" />
       <div class="card text-white bg-dark">
         <div style="margin: 10px 30px">
-          <h5 class="card-text">Comments</h5>
+          <br />
+          <h3 class="card-text">Comments</h3>
+          <hr />
           <p></p>
           <p
             class="card-text"
@@ -41,6 +49,7 @@
               Add Comment
             </button>
           </p>
+          <br />
         </div>
       </div>
     </div>

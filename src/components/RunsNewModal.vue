@@ -22,7 +22,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content text-white bg-dark">
           <div class="modal-header">
-            <h5 class="modal-title" id="newRunModalLabel">New Run</h5>
+            <h3 class="modal-title" id="newRunModalLabel">New Run</h3>
             <button
               type="button"
               class="btn-close"
@@ -31,6 +31,7 @@
             ></button>
           </div>
           <div class="modal-body centered-buttons" v-if="!entryMethodSelected">
+            <br />
             <p>
               <button
                 type="button"
@@ -178,21 +179,25 @@
             </div>
           </div>
           <div class="modal-footer" v-if="entryMethodSelected">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              v-on:click="closeModal()"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              class="btn btn-dark"
-              v-on:click="createRun()"
-              v-if="showCreateRunButton"
-            >
-              Create Run
-            </button>
+            <div style="margin: 0px auto">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                v-on:click="closeModal()"
+                style="margin: 0px 10px; width: 8em"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                v-on:click="createRun()"
+                v-if="showCreateRunButton"
+                style="margin: 0px 10px; width: 8em"
+              >
+                Create Run
+              </button>
+            </div>
           </div>
         </div>
       </div>
