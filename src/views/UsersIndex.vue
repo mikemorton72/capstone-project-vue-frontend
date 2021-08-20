@@ -8,7 +8,9 @@
     </div>
     <div v-if="loggedIn">
       <br />
-      <h2 style="text-align: center; color: white">All Users</h2>
+      <div class="card text-center text-white bg-dark">
+        <h2 style="padding: 10px 0px">All Users</h2>
+      </div>
       <hr />
       <div class="row row-cols-1 row-cols-md-4 g-4">
         <div v-for="user in users" v-bind:key="user.id">

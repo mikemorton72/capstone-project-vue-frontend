@@ -8,7 +8,9 @@
     </div>
     <br />
     <div v-if="loggedIn">
-      <h2 style="text-align: center; color: white">Run Feed</h2>
+      <div class="card text-center text-white bg-dark" style="width: 60%; margin: 0px auto">
+        <h2 style="padding: 10px 0px">Run Feed</h2>
+      </div>
       <hr />
       <RunsNewModal
         v-bind:runs="runs"
