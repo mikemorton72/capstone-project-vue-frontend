@@ -14,8 +14,10 @@
       >
         <div class="card-body">
           <h2>{{ run.title }}</h2>
-          <h5>Distance: {{ distanceFormat(run.distance) }}</h5>
-          <h5>Time: {{ timeFormat(run.elapsed_time) }}</h5>
+          <h6>Location: {{ run.location_name }}</h6>
+          <h6>Distance: {{ distanceFormat(run.distance) }}</h6>
+          <h6>Time: {{ timeFormat(run.elapsed_time) }}</h6>
+          <h6>Pace: {{ run.pace }}</h6>
         </div>
       </div>
       <RunMap v-if="mapLoaded()" v-bind:run="run" id="map" />

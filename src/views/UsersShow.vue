@@ -18,10 +18,11 @@
           <div class="col-md-8">
             <div class="card-body">
               <h2 class="card-title">{{ user.name }}</h2>
+              <br />
+              <p class="card-text">Number of Runs: {{ user.number_of_runs }}</p>
               <p class="card-text">
                 Total miles: {{ distanceFormat(user.total_miles) }}
               </p>
-              <p class="card-text">Number of Runs: {{ user.number_of_runs }}</p>
               <p class="card-text">Average Pace: {{ user.average_pace }}</p>
             </div>
           </div>

@@ -4,7 +4,7 @@
     <div id="new-run-button-div">
       <button
         type="button"
-        class="btn btn-dark my-button"
+        class="btn btn-secondary my-button"
         v-on:click="showModal()"
       >
         Create New Run Post
