@@ -338,6 +338,7 @@ export default {
           this.closeModal();
           this.entryMethodSelected = false;
           this.manualEntryToggle();
+          this.usingMyCurrentLocation = false;
         })
         .catch((errors) => {
           this.errors = errors.response.data.errors;
@@ -354,7 +355,6 @@ export default {
           this.entryMethodSelected = true;
           this.showCreateRunButton = false;
           this.stravaRuns = response.data;
-          console.log(response.data);
         });
     },
     nextPage: function () {
