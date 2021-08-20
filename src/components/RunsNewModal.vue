@@ -177,6 +177,27 @@
               <br />
               <hr />
             </div>
+            <div style="text-align: center">
+              <button
+                class="btn btn-secondary pagination-button"
+                v-on:click="previousPage()"
+                v-if="stravaIndexPage != 1"
+                v-bind:disabled="loadingResults"
+              >
+                Previous
+              </button>
+              <span v-else style="margin: auto 70px"></span>
+              <span>Page {{ this.stravaIndexPage }}</span>
+              <button
+                class="btn btn-secondary pagination-button"
+                v-on:click="nextPage()"
+                v-if="true"
+                v-bind:disabled="loadingResults"
+              >
+                Next
+              </button>
+              <span v-else style="margin: auto 70px"></span>
+            </div>
           </div>
           <div class="modal-footer" v-if="entryMethodSelected">
             <div style="margin: 0px auto">
@@ -184,6 +205,7 @@
                 type="button"
                 class="btn btn-secondary"
                 v-on:click="closeModal()"
+                v-if="showCreateRunButton"
                 style="margin: 0px 10px; width: 8em"
               >
                 Cancel
@@ -238,6 +260,8 @@ export default {
       entryMethodSelected: false,
       showCreateRunButton: true,
       usingMyCurrentLocation: false,
+      stravaIndexPage: 1,
+      loadingResults: false,
     };
   },
   methods: {
@@ -321,12 +345,27 @@ export default {
         });
     },
     stravaRunIndex: function () {
-      axios.get("/strava_oauth/runs").then((response) => {
-        this.stravaImport = true;
-        this.entryMethodSelected = true;
-        this.showCreateRunButton = false;
-        this.stravaRuns = response.data;
-      });
+      this.loadingResults = true;
+      axios
+        .get("/strava_oauth/runs", { params: { page: this.stravaIndexPage } })
+        .then((response) => {
+          this.loadingResults = false;
+          this.stravaImport = true;
+          this.entryMethodSelected = true;
+          this.showCreateRunButton = false;
+          this.stravaRuns = response.data;
+          console.log(response.data);
+        });
+    },
+    nextPage: function () {
+      this.stravaIndexPage += 1;
+      this.stravaRunIndex();
+    },
+    previousPage: function () {
+      if (this.stravaIndexPage != 1) {
+        this.stravaIndexPage -= 1;
+        this.stravaRunIndex();
+      }
     },
     createStravaImport: function (run) {
       this.newRun.title = run.name;
