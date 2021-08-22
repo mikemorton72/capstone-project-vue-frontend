@@ -9,7 +9,7 @@
     <br />
     <div
       class="card text-center text-white bg-dark"
-      style="width: 60%; margin: 0px auto"
+      style="width: 70%; margin: 0px auto"
     >
       <h2 style="padding: 10px 0px">Run Feed</h2>
     </div>
@@ -39,6 +39,7 @@
       v-bind:timeFormat="timeFormat"
       v-bind:addComment="addComment"
       v-bind:showUser="showUser"
+      v-on:runIndex="runIndex"
     />
     <div style="text-align: center">
       <button

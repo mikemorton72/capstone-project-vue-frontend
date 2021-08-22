@@ -25,7 +25,7 @@
             <h3 class="modal-title" id="newRunModalLabel">New Run</h3>
             <button
               type="button"
-              class="btn-close"
+              class="btn-close btn-close-white"
               aria-label="Close"
               v-on:click="closeModal()"
             ></button>
@@ -236,7 +236,7 @@
   text-align: center;
 }
 .my-button {
-  width: 60%;
+  width: 70%;
 }
 #strava-import-list {
   text-align: center;
