@@ -53,7 +53,7 @@
               </button>
             </p>
           </div>
-          <div class="modal-body" v-if="manualEntry">
+          <div class="modal-body" v-show="manualEntry">
             <div v-if="hasErrors()" style="text-align: center">
               <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
             </div>
@@ -157,7 +157,7 @@
               </div>
             </form>
           </div>
-          <div class="modal-body" v-if="stravaImport">
+          <div class="modal-body" v-show="stravaImport">
             <div
               id="strava-import-list"
               v-for="run in stravaRuns"

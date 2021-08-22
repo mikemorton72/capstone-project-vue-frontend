@@ -76,6 +76,35 @@
       </div>
     </nav>
     <div class="container">
+      <br />
+      <div
+        class="alert alert-success alert-dismissible fade show"
+        role="alert"
+        v-if="stravaInit"
+        style="text-align: center"
+      >
+        Strava account successfully linked
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div
+        class="alert alert-danger alert-dismissible fade show"
+        role="alert"
+        v-if="stravaUnlinked"
+        style="text-align: center"
+      >
+        Strava account successfully removed
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
       <router-view
         v-bind:checkLoggedIn="checkLoggedIn"
         v-bind:addComment="addComment"
@@ -102,12 +131,27 @@
 import axios from "axios";
 import numeral from "numeral";
 export default {
+  data: function () {
+    return {
+      stravaInit: false,
+      stravaUnlinked: false,
+    };
+  },
   created: function () {
-    if (this.$route.query.strava_initial_auth === "true") {
-      localStorage.has_strava = "true";
-    }
+    this.stravaInitialLink();
   },
   methods: {
+    stravaInitialLink: function () {
+      if (this.$route.query.strava_initial_auth === "true") {
+        this.stravaInit = true;
+        localStorage.has_strava = "true";
+      } else {
+        this.stravaInit = false;
+        if (this.$route.query.strava_removed === "true") {
+          this.stravaUnlinked = true;
+        }
+      }
+    },
     isActiveNav: function (route) {
       if (this.$route.path == route) {
         return true;
@@ -151,6 +195,7 @@ export default {
       axios.delete("/strava_oauth").then(() => {
         localStorage.has_strava = "false";
         this.$router.push("/?strava_removed=true");
+        this.stravaUnlinked = true;
       });
     },
     addComment: function (run) {
