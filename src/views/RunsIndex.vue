@@ -7,51 +7,59 @@
       </p>
     </div>
     <br />
-    <div v-if="loggedIn">
-      <div
-        class="card text-center text-white bg-dark"
-        style="width: 60%; margin: 0px auto"
-      >
-        <h2 style="padding: 10px 0px">Run Feed</h2>
-      </div>
-      <hr />
-      <RunsNewModal
-        v-bind:runs="runs"
-        v-bind:hasStrava="hasStrava"
-        v-bind:distanceFormat="distanceFormat"
-        v-bind:timeFormat="timeFormat"
-      />
-      <br />
-      <RunCard
-        v-for="run in runs"
-        v-bind:key="run.id"
-        v-bind:run="run"
-        v-bind:distanceFormat="distanceFormat"
-        v-bind:timeFormat="timeFormat"
-        v-bind:addComment="addComment"
-        v-bind:showUser="showUser"
-      />
-      <div style="text-align: center">
-        <button
-          class="btn btn-dark pagination-button"
-          v-on:click="previousPage()"
-          v-if="currentPage != 1"
-        >
-          Previous
-        </button>
-        <span v-else style="margin: auto 70px"></span>
-        <span>Page {{ this.currentPage }}</span>
-        <button
-          class="btn btn-dark pagination-button"
-          v-on:click="nextPage()"
-          v-if="runs.length == 8"
-        >
-          Next
-        </button>
-        <span v-else style="margin: auto 70px"></span>
-      </div>
-      <br />
+    <div
+      class="card text-center text-white bg-dark"
+      style="width: 60%; margin: 0px auto"
+    >
+      <h2 style="padding: 10px 0px">Run Feed</h2>
     </div>
+    <hr />
+    <div v-if="noPosts">
+      <p style="color: white; text-align: center">
+        <br />
+        It looks like nothing is in your feed. <br />
+        <a href="/users" style="color: white">Follow users</a> or create a post
+        using the button below.
+        <br />
+        <br />
+      </p>
+    </div>
+    <RunsNewModal
+      v-bind:runs="runs"
+      v-bind:hasStrava="hasStrava"
+      v-bind:distanceFormat="distanceFormat"
+      v-bind:timeFormat="timeFormat"
+    />
+    <br />
+    <RunCard
+      v-for="run in runs"
+      v-bind:key="run.id"
+      v-bind:run="run"
+      v-bind:distanceFormat="distanceFormat"
+      v-bind:timeFormat="timeFormat"
+      v-bind:addComment="addComment"
+      v-bind:showUser="showUser"
+    />
+    <div style="text-align: center">
+      <button
+        class="btn btn-dark pagination-button"
+        v-on:click="previousPage()"
+        v-if="currentPage != 1"
+      >
+        Previous
+      </button>
+      <span v-else style="margin: auto 70px"></span>
+      <span>Page {{ this.currentPage }}</span>
+      <button
+        class="btn btn-dark pagination-button"
+        v-on:click="nextPage()"
+        v-if="runs.length == 8"
+      >
+        Next
+      </button>
+      <span v-else style="margin: auto 70px"></span>
+    </div>
+    <br />
   </div>
 </template>
 <style>
@@ -77,12 +85,14 @@ export default {
     "distanceFormat",
     "hasStrava",
     "showUser",
+    "scrollToTop",
   ],
   data: function () {
     return {
       runs: {},
       loggedIn: false,
       currentPage: null,
+      noPosts: false,
     };
   },
   created: function () {
@@ -100,6 +110,9 @@ export default {
     runIndex: function () {
       axios.get("/runs", { params: this.$route.query }).then((response) => {
         this.runs = response.data;
+        if (this.runs.length == 0) {
+          this.noPosts = true;
+        }
       });
     },
     getCurrentPage: function () {
@@ -113,12 +126,14 @@ export default {
       this.$router.push(`/?page=${this.currentPage + 1}`);
       this.currentPage += 1;
       this.runIndex();
+      this.scrollToTop();
     },
     previousPage: function () {
       if (this.currentPage != 1) {
         this.$router.push(`/?page=${this.currentPage - 1}`);
         this.currentPage -= 1;
         this.runIndex();
+        this.scrollToTop();
       }
     },
   },

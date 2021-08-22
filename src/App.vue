@@ -116,6 +116,7 @@
         v-bind:timeFormat="timeFormat"
         v-bind:userId="userId"
         v-bind:hasStrava="hasStrava"
+        v-bind:scrollToTop="scrollToTop"
       />
     </div>
   </div>
@@ -196,6 +197,7 @@ export default {
         localStorage.has_strava = "false";
         this.$router.push("/?strava_removed=true");
         this.stravaUnlinked = true;
+        this.stravaInit = false;
       });
     },
     addComment: function (run) {
@@ -243,6 +245,9 @@ export default {
     },
     showUser: function (user_id) {
       this.$router.push(`/users/${user_id}`);
+    },
+    scrollToTop() {
+      window.scrollTo(0, 0);
     },
   },
 };
