@@ -6,61 +6,63 @@
         Please <a href="/login" style="color: white">log in</a> to view posts
       </p>
     </div>
-    <br />
-    <div
-      class="card text-center text-white bg-dark"
-      style="width: 70%; margin: 0px auto"
-    >
-      <h2 style="padding: 10px 0px">Run Feed</h2>
-    </div>
-    <hr />
-    <div v-if="noPosts">
-      <p style="color: white; text-align: center">
-        <br />
-        It looks like nothing is in your feed. <br />
-        <a href="/users" style="color: white">Follow users</a> or create a post
-        using the button below.
-        <br />
-        <br />
-      </p>
-    </div>
-    <RunsNewModal
-      v-bind:runs="runs"
-      v-bind:hasStrava="hasStrava"
-      v-bind:distanceFormat="distanceFormat"
-      v-bind:timeFormat="timeFormat"
-    />
-    <br />
-    <RunCard
-      v-for="run in runs"
-      v-bind:key="run.id"
-      v-bind:run="run"
-      v-bind:distanceFormat="distanceFormat"
-      v-bind:timeFormat="timeFormat"
-      v-bind:addComment="addComment"
-      v-bind:showUser="showUser"
-      v-on:runIndex="runIndex"
-    />
-    <div style="text-align: center">
-      <button
-        class="btn btn-dark pagination-button"
-        v-on:click="previousPage()"
-        v-if="currentPage != 1"
+    <div v-else>
+      <br />
+      <div
+        class="card text-center text-white bg-dark"
+        style="width: 70%; margin: 0px auto"
       >
-        Previous
-      </button>
-      <span v-else style="margin: auto 70px"></span>
-      <span>Page {{ this.currentPage }}</span>
-      <button
-        class="btn btn-dark pagination-button"
-        v-on:click="nextPage()"
-        v-if="runs.length == 8"
-      >
-        Next
-      </button>
-      <span v-else style="margin: auto 70px"></span>
+        <h2 style="padding: 10px 0px">Run Feed</h2>
+      </div>
+      <hr />
+      <div v-if="noPosts">
+        <p style="color: white; text-align: center">
+          <br />
+          It looks like nothing is in your feed. <br />
+          <a href="/users" style="color: white">Follow users</a> or create a
+          post using the button below.
+          <br />
+          <br />
+        </p>
+      </div>
+      <RunsNewModal
+        v-bind:runs="runs"
+        v-bind:hasStrava="hasStrava"
+        v-bind:distanceFormat="distanceFormat"
+        v-bind:timeFormat="timeFormat"
+      />
+      <br />
+      <RunCard
+        v-for="run in runs"
+        v-bind:key="run.id"
+        v-bind:run="run"
+        v-bind:distanceFormat="distanceFormat"
+        v-bind:timeFormat="timeFormat"
+        v-bind:addComment="addComment"
+        v-bind:showUser="showUser"
+        v-on:runIndex="runIndex"
+      />
+      <div style="text-align: center">
+        <button
+          class="btn btn-dark pagination-button"
+          v-on:click="previousPage()"
+          v-if="currentPage != 1"
+        >
+          Previous
+        </button>
+        <span v-else style="margin: auto 70px"></span>
+        <span>Page {{ this.currentPage }}</span>
+        <button
+          class="btn btn-dark pagination-button"
+          v-on:click="nextPage()"
+          v-if="runs.length == 8"
+        >
+          Next
+        </button>
+        <span v-else style="margin: auto 70px"></span>
+      </div>
+      <br />
     </div>
-    <br />
   </div>
 </template>
 <style>

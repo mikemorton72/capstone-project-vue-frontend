@@ -106,13 +106,7 @@ export default {
   methods: {
     getUsers: function () {
       axios.get("/users", { params: this.$route.query }).then((response) => {
-        let userIndex = response.data;
-        for (let i = 0; i < userIndex.length; i++) {
-          if (userIndex[i].id === parseInt(localStorage.user_id)) {
-            userIndex.splice(i, 1);
-          }
-        }
-        this.users = userIndex;
+        this.users = response.data;
       });
     },
     getCurrentPage: function () {

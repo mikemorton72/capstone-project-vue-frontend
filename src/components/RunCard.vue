@@ -24,7 +24,7 @@
                   class="btn-close btn-close-white"
                   aria-label="Close"
                   v-if="isUsersRun(run)"
-                  v-on:click="showModal(run.id)"
+                  v-on:click="showEditModal(run.id)"
                 ></button>
               </span>
             </h3>
@@ -111,7 +111,7 @@
             <button
               type="button"
               class="btn-close"
-              v-on:click="hideModal(run.id)"
+              v-on:click="hideEditModal(run.id)"
             ></button>
           </div>
           <div class="modal-body">
@@ -121,7 +121,7 @@
             <button
               type="button"
               class="btn btn-secondary"
-              v-on:click="hideModal(run.id)"
+              v-on:click="hideEditModal(run.id)"
             >
               Cancel
             </button>
@@ -184,16 +184,16 @@ export default {
     },
     runDestroy(runId) {
       axios.delete(`/runs/${runId}`).then(() => {
-        this.hideModal(runId);
+        this.hideEditModal(runId);
         this.$emit("runIndex");
       });
     },
-    showModal: function (runId) {
+    showEditModal: function (runId) {
       document.getElementById("backdrop").style.display = "block";
       document.getElementById(`delete${runId}`).style.display = "block";
       document.getElementById(`delete${runId}`).classList.add("show");
     },
-    hideModal: function (runId) {
+    hideEditModal: function (runId) {
       document.getElementById("backdrop").style.display = "none";
       document.getElementById(`delete${runId}`).style.display = "none";
       document.getElementById(`delete${runId}`).classList.remove("show");
