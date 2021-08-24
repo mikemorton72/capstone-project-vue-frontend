@@ -13,6 +13,11 @@
         style="width: 100%; text-align: center"
       >
         <div class="card-body">
+          <img
+            src="../assets/strava.png"
+            style="height: 2em"
+            v-if="run.is_strava_import"
+          />
           <h2>{{ run.title }}</h2>
           <h6>Location: {{ run.location_name }}</h6>
           <h6>Distance: {{ distanceFormat(run.distance) }}</h6>
