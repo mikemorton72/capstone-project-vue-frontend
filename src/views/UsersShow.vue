@@ -89,7 +89,7 @@
 </template>
 <style>
 .wide-button {
-  width: 60%;
+  width: 70%;
 }
 </style>
 <script>
